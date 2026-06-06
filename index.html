@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tushar Kalra — Fullstack Developer</title>
+  <title>Tushar Kalra | Backend Engineer | Go &amp; Node.js Developer</title>
+  <meta name="description" content="Backend Engineer specializing in Go, Node.js, SaaS platforms, payment infrastructure, scalable systems, and modern web applications." />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='bg' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23f5c842'/%3E%3Cstop offset='100%25' stop-color='%23c9922a'/%3E%3C/radialGradient%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23f5c842' stop-opacity='0.4'/%3E%3Cstop offset='100%25' stop-color='%23f5c842' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='%230a0a0f'/%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23glow)'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23f5c842' stroke-width='1.2' stroke-opacity='0.35'/%3E%3Ccircle cx='32' cy='32' r='14' fill='url(%23bg)'/%3E%3Ccircle cx='48' cy='20' r='3.5' fill='%234fc3f7' opacity='0.9'/%3E%3Ccircle cx='14' cy='38' r='2.5' fill='%232ecc71' opacity='0.85'/%3E%3Ccircle cx='44' cy='46' r='2' fill='%23b45cf5' opacity='0.8'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-family='Arial Black, sans-serif' font-weight='900' font-size='13' fill='%230a0a0f' letter-spacing='-0.5'%3ETK%3C/text%3E%3C/svg%3E" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -106,8 +107,25 @@
       opacity: 0;
     }
 
+    .hero-role {
+      font-size: clamp(1rem, 2.2vw, 1.45rem);
+      color: #ccc;
+      margin-top: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      opacity: 0;
+    }
+
+    .hero-sub {
+      font-size: 0.82rem;
+      color: #555;
+      letter-spacing: 2px;
+      margin-top: 0.35rem;
+      opacity: 0;
+    }
+
     .hero-title {
-      font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+      font-size: clamp(1rem, 2vw, 1.4rem);
       color: #ccc;
       margin-top: 1rem;
       font-weight: 400;
@@ -119,14 +137,14 @@
     .hero-meta {
       display: flex;
       gap: 2rem;
-      margin-top: 2rem;
+      margin-top: 1.6rem;
       font-size: 0.85rem;
       color: #777;
       opacity: 0;
     }
 
     .hero-cta {
-      margin-top: 3rem;
+      margin-top: 2.5rem;
       display: flex;
       gap: 1.2rem;
       opacity: 0;
@@ -278,6 +296,7 @@
       font-weight: 800;
       color: var(--gold);
       line-height: 1;
+      cursor: default;
     }
 
     .stat-label {
@@ -384,7 +403,7 @@
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 10px;
-      padding: 2rem;
+      padding: 1.8rem;
       transition: all 0.4s;
       opacity: 0;
       transform: translateY(20px);
@@ -392,6 +411,10 @@
       text-decoration: none;
       color: inherit;
       display: block;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
     .project-card.visible {
@@ -405,30 +428,51 @@
       background: rgba(245,200,66,0.04);
     }
 
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+    }
+
     .project-number {
       font-size: 0.75rem;
       color: var(--gold);
       letter-spacing: 3px;
-      margin-bottom: 0.8rem;
     }
 
-    .project-name {
-      font-size: 1.3rem;
+    .project-status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      font-size: 0.68rem;
       font-weight: 700;
-      margin-bottom: 0.6rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-completed { background: rgba(46,204,113,0.2); color: #2ecc71; }
+    .status-development { background: rgba(241,196,15,0.2); color: #f1c40f; }
+    .status-active { background: rgba(79,195,247,0.2); color: var(--accent); }
+
+    .project-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
 
     .project-desc {
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.7;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
 
     .project-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      margin-bottom: 1.1rem;
     }
 
     .tag {
@@ -440,20 +484,58 @@
       color: var(--gold);
     }
 
-    .project-status-badge {
-      display: inline-block;
-      padding: 0.2rem 0.6rem;
-      border-radius: 3px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 1rem;
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 0.8rem;
+      margin-top: auto;
     }
 
-    .status-completed { background: rgba(46,204,113,0.2); color: #2ecc71; }
-    .status-development { background: rgba(241,196,15,0.2); color: #f1c40f; }
-    .status-active { background: rgba(79,195,247,0.2); color: var(--accent); }
+    .card-type {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      color: var(--gold);
+      opacity: 0.55;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .project-card:hover .card-arrow {
+      opacity: 1;
+      transform: translate(2px, -2px);
+    }
+
+    .tilt-shine {
+      position: absolute;
+      inset: 0;
+      border-radius: 10px;
+      background: radial-gradient(circle at var(--tx,50%) var(--ty,50%),
+        rgba(245,200,66,0.12) 0%, transparent 65%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .tilt-shine { opacity: 1; }
+
+    /* ─── RIPPLE ─── */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(245,200,66,0.25);
+      transform: scale(0);
+      animation: rippleAnim 0.55s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
 
     /* ─── SKILLS ─── */
     #skills {
@@ -499,20 +581,43 @@
       margin-bottom: 1.2rem;
     }
 
-    .skill-list {
-      list-style: none;
+    /* Tag-cloud skill layout */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
     }
 
-    .skill-list li {
-      color: var(--muted);
-      font-size: 0.95rem;
-      padding: 0.3rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      transition: color 0.3s;
+    .skill-tag {
+      padding: 0.28rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: #aaa;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
     }
 
-    .skill-list li:last-child { border: none; }
-    .skill-cat-card:hover .skill-list li { color: var(--text); }
+    .skill-tag.core {
+      color: var(--gold);
+      background: rgba(245,200,66,0.08);
+      border-color: rgba(245,200,66,0.22);
+    }
+
+    .skill-cat-card:hover .skill-tag {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .skill-cat-card:hover .skill-tag.core {
+      color: var(--gold);
+      background: rgba(245,200,66,0.12);
+      border-color: rgba(245,200,66,0.35);
+    }
+
+    .skill-cat-card.featured-cat {
+      border-color: rgba(245,200,66,0.22);
+    }
 
     /* ─── CONTACT ─── */
     .contact-wrapper {
@@ -526,7 +631,7 @@
       justify-content: center;
       gap: 1.5rem;
       flex-wrap: wrap;
-      margin-top: 3rem;
+      margin-top: 2.5rem;
     }
 
     .contact-link {
@@ -548,6 +653,35 @@
       transform: translateY(-3px);
     }
 
+    .open-to-wrap {
+      margin-top: 2.5rem;
+    }
+
+    .open-to-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 0.9rem;
+    }
+
+    .open-to-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+    }
+
+    .open-to-pill {
+      padding: 0.35rem 1rem;
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      color: rgba(245,200,66,0.7);
+      letter-spacing: 0.5px;
+      background: rgba(245,200,66,0.05);
+    }
+
     /* ─── FOOTER ─── */
     footer {
       position: relative;
@@ -557,6 +691,14 @@
       border-top: 1px solid rgba(255,255,255,0.05);
       color: #444;
       font-size: 0.85rem;
+    }
+
+    .footer-sub {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: #333;
+      text-transform: uppercase;
     }
 
     /* ─── ANIMATIONS ─── */
@@ -577,6 +719,7 @@
       section { padding: 5rem 1.5rem; }
       #about .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .hero-meta { flex-direction: column; gap: 0.5rem; }
+      .bring-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── CURSOR GLOW ─── */
@@ -599,7 +742,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 9998;  /* just below loader */
+      z-index: 9998;
     }
 
     /* ─── PLANET TOOLTIP ─── */
@@ -746,72 +889,6 @@
     }
     .nav-links a.active::after,
     .nav-links a:hover::after { transform: scaleX(1); }
-
-    /* ─── TILT CARDS ─── */
-    .project-card {
-      transform-style: preserve-3d;
-      will-change: transform;
-    }
-    .tilt-shine {
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      background: radial-gradient(circle at var(--tx,50%) var(--ty,50%),
-        rgba(245,200,66,0.12) 0%, transparent 65%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .project-card:hover .tilt-shine { opacity: 1; }
-    .project-card { position: relative; overflow: hidden; }
-
-    /* ─── RIPPLE ─── */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(245,200,66,0.25);
-      transform: scale(0);
-      animation: rippleAnim 0.55s linear;
-      pointer-events: none;
-    }
-    @keyframes rippleAnim {
-      to { transform: scale(4); opacity: 0; }
-    }
-
-    /* ─── SKILL BARS ─── */
-    .skill-bar-wrap {
-      margin-top: 0.5rem;
-    }
-    .skill-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-bottom: 0.55rem;
-    }
-    .skill-bar-name {
-      font-size: 0.8rem;
-      color: var(--muted);
-      width: 90px;
-      flex-shrink: 0;
-    }
-    .skill-bar-track {
-      flex: 1;
-      height: 4px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--accent));
-      border-radius: 2px;
-      width: 0;
-      transition: width 1s cubic-bezier(.4,0,.2,1);
-      box-shadow: 0 0 6px var(--gold);
-    }
-    .skill-cat-card.visible .skill-bar-fill {
-      width: var(--skill-pct, 80%);
-    }
 
     /* ─── KEYBOARD PANEL ─── */
     #kbd-panel {
@@ -1050,9 +1127,6 @@
     .bring-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.6rem; }
     .bring-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.75; }
 
-    /* ─── STAT COUNTER ─── */
-    .stat-number { cursor: default; }
-
     /* ─── EARTH EXPLORE ─── */
     #earth-stage {
       position: relative;
@@ -1114,6 +1188,7 @@
       pointer-events: none;
       animation: bounce 2s infinite;
     }
+
     /* ─── ASTEROID BELT ─── */
     #asteroid-canvas {
       position: fixed;
@@ -1126,10 +1201,6 @@
       transition: opacity 1s;
     }
     #asteroid-canvas.active { opacity: 1; }
-
-    @media (max-width: 768px) {
-      .bring-grid { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
@@ -1142,7 +1213,7 @@
   </div>
 
   <!-- OPEN TO WORK BADGE -->
-  <div id="otw-badge"><span class="otw-dot"></span> Open to new opportunities</div>
+  <div id="otw-badge"><span class="otw-dot"></span> Open to backend roles</div>
 
   <div id="scroll-progress"></div>
   <canvas id="bg-canvas"></canvas>
@@ -1189,6 +1260,8 @@
   <section id="hero">
     <p class="hero-eyebrow">Welcome to my world</p>
     <h1 class="hero-name">Tushar Kalra</h1>
+    <p class="hero-role">Backend Engineer &nbsp;·&nbsp; Go &amp; Node.js Developer</p>
+    <p class="hero-sub">Scalable systems &nbsp;·&nbsp; SaaS &nbsp;·&nbsp; Payment Infrastructure</p>
     <p class="hero-title" id="typewriter-wrap"><span id="typewriter-text"></span><span class="tw-cursor"></span></p>
     <div class="hero-meta">
       <span>📍 Gurugram, India</span>
@@ -1206,7 +1279,7 @@
   <!-- STORY BAND 1 -->
   <div class="story-band">
     Every great story starts with a <strong>single line of code.</strong>
-    Mine started with curiosity — and never stopped.
+    Mine started with curiosity about how the internet works — and never stopped.
   </div>
 
   <!-- EARTH EXPLORE STAGE -->
@@ -1227,23 +1300,22 @@
     <div class="about-grid">
       <div class="about-text">
         <p>
-          I'm <strong>Tushar Kalra</strong>, a Fullstack Developer based in Gurugram with a 
-          relentless passion for building things that <strong>actually work</strong> — fast, scalable, 
-          and clean.
+          I'm <strong>Tushar Kalra</strong>, a Backend Engineer based in Gurugram with a
+          relentless drive for building systems that <strong>scale, perform, and endure</strong>.
         </p>
         <p>
-          My journey began with a curiosity about how the internet works. That curiosity turned into 
-          building DNS servers from scratch, real-time chat applications, and full enterprise-grade 
-          inventory management systems.
+          My journey started with a curiosity about how the internet actually works — DNS, TCP,
+          UDP, protocols at the wire level. That curiosity led me to build a DNS server from scratch,
+          dive into distributed systems, and design payment infrastructure that handles real transactions.
         </p>
         <p>
-          Today, as a <strong>Software Engineer at Vervebot.io</strong>, I architect systems that 
-          reduce manual work by 60% and cut processing times in half — because good code should 
-          solve real problems.
+          Today, as a <strong>Software Engineer at Vervebot.io</strong>, I architect backend systems
+          using <strong>Node.js</strong>, <strong>Go</strong>, <strong>gRPC</strong>, and <strong>MongoDB</strong> —
+          reducing manual workflows by 60% and cutting processing times in half.
         </p>
         <p>
-          I specialize in the full Javascript ecosystem: from REST APIs and WebSockets on the backend 
-          to responsive, snappy interfaces on the frontend.
+          I build production-grade SaaS platforms, real-time systems, and payment infrastructure
+          from idea to deployment — because good engineering solves real problems at scale.
         </p>
       </div>
       <div class="about-stats">
@@ -1252,8 +1324,8 @@
           <div class="stat-label">Year Professional XP</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">3+</div>
-          <div class="stat-label">Projects Shipped</div>
+          <div class="stat-number">8+</div>
+          <div class="stat-label">Projects Built</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">60%</div>
@@ -1261,7 +1333,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-number">50%</div>
-          <div class="stat-label">Faster Invoice Processing</div>
+          <div class="stat-label">Faster Processing</div>
         </div>
       </div>
     </div>
@@ -1270,7 +1342,7 @@
   <!-- STORY BAND 2 -->
   <div class="story-band">
     Then came the <strong>real world.</strong>
-    Where code meets deadlines, users, and stakeholders.
+    Where code meets deadlines, users, and production traffic.
   </div>
 
   <!-- EXPERIENCE -->
@@ -1285,12 +1357,12 @@
         <div class="timeline-role">Software Engineer</div>
         <div class="timeline-company">Vervebot.io</div>
         <ul class="timeline-highlights">
-          <li>Built a full-stack ICMS app to automate invoicing and inventory workflows end-to-end.</li>
-          <li>Integrated barcode scanning for product detection, cutting manual data entry by <strong style="color:#e8e8e8">60%</strong>.</li>
-          <li>Reduced invoice processing time by over <strong style="color:#e8e8e8">50%</strong> via streamlined logic and API design.</li>
+          <li>Owned backend architecture for a full-stack ICMS platform — inventory, invoicing, and workflow automation end-to-end.</li>
+          <li>Designed and built RESTful APIs consumed by web and barcode-scanning clients, cutting manual data entry by <strong style="color:#e8e8e8">60%</strong>.</li>
+          <li>Automated business workflows (invoice generation, chain management) reducing processing time by over <strong style="color:#e8e8e8">50%</strong>.</li>
+          <li>Built a real-time monitoring system for application health, uptime, and alerting.</li>
           <li>Delivered analytics and reporting modules enabling data-driven business insights.</li>
-          <li>Responsible for maintaining and improving the core ICMS platform.</li>
-          <li>Developed a real-time monitoring system for application health and uptime.</li>
+          <li>Maintained and iterated on the core platform — performance, reliability, and scalability.</li>
         </ul>
       </div>
     </div>
@@ -1298,8 +1370,8 @@
 
   <!-- STORY BAND 3 -->
   <div class="story-band">
-    But the real learning happened <strong>outside office hours</strong> — 
-    building projects just because they were <strong>interesting.</strong>
+    But the real learning happened <strong>outside office hours</strong> —
+    building things just because they were <strong>worth building.</strong>
   </div>
 
   <!-- WHAT I BRING -->
@@ -1321,7 +1393,12 @@
       <div class="bring-card">
         <span class="bring-icon">🔍</span>
         <div class="bring-title">Deep Problem Diagnosis</div>
-        <div class="bring-desc">From UDP packet loss to React render loops — I dig into root causes instead of patching symptoms.</div>
+        <div class="bring-desc">From UDP packet loss to distributed race conditions — I dig into root causes instead of patching symptoms.</div>
+      </div>
+      <div class="bring-card">
+        <span class="bring-icon">🚀</span>
+        <div class="bring-title">Product Builder</div>
+        <div class="bring-desc">Built SaaS products, backend systems, real-time applications, and payment infrastructure from idea to deployment.</div>
       </div>
     </div>
   </section>
@@ -1333,12 +1410,83 @@
     <div class="section-divider"></div>
     <div class="projects-grid">
 
+      <a class="project-card" href="https://github.com/Tushar-programador/relook" target="_blank" rel="noopener">
+        <div class="tilt-shine"></div>
+        <div class="card-header">
+          <div class="project-number">Project 01</div>
+          <div class="project-status-badge status-active">Production</div>
+        </div>
+        <div class="project-name">RElook</div>
+        <div class="project-desc">
+          Customer testimonial SaaS platform — collect video, audio, and text testimonials with
+          OTP verification, media uploads, moderation workflows, analytics, and embeddable widgets.
+        </div>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Cloudinary</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-type">SaaS Platform</span>
+          <span class="card-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/Tushar-programador/payment-gateway" target="_blank" rel="noopener">
+        <div class="tilt-shine"></div>
+        <div class="card-header">
+          <div class="project-number">Project 02</div>
+          <div class="project-status-badge status-development">In Development</div>
+        </div>
+        <div class="project-name">Payment Gateway</div>
+        <div class="project-desc">
+          Modern payment infrastructure — merchant onboarding, transaction lifecycle management,
+          payment processing, webhooks, settlement workflows, and secure authenticated APIs.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">REST APIs</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-type">Fintech / Infrastructure</span>
+          <span class="card-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/Tushar-programador/outdraw" target="_blank" rel="noopener">
+        <div class="tilt-shine"></div>
+        <div class="card-header">   
+          <div class="project-number">Project 03</div>
+          <div class="project-status-badge status-development">In Development</div>
+        </div>
+        <div class="project-name">Outdraw</div>
+        <div class="project-desc">
+          Cloud application platform — applications run in the cloud with centrally managed user data,
+          multi-tenant architecture, application orchestration, and scalable cloud-native design.
+        </div>
+        <div class="project-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Go</span>
+          <span class="tag">Docker</span>
+        </div>
+        <div class="card-footer">
+          <span class="card-type">Cloud Platform</span>
+          <span class="card-arrow">↗</span>
+        </div>
+      </a>
+
       <a class="project-card" href="https://github.com/Tushar-programador" target="_blank" rel="noopener">
         <div class="tilt-shine"></div>
-        <div class="project-number">Project 01</div>
-        <div class="project-name">ICMS — Inventory & Chain Management</div>
+        <div class="card-header">
+          <div class="project-number">Project 04</div>
+          <div class="project-status-badge status-active">Production</div>
+        </div>
+        <div class="project-name">ICMS — Inventory &amp; Chain Management</div>
         <div class="project-desc">
-          Enterprise-grade invoice and chain management system. Barcode scanning, real-time sync across 
+          Enterprise-grade invoice and chain management system. Barcode scanning, real-time sync across
           devices, analytics dashboards, and automated data validation.
         </div>
         <div class="project-tags">
@@ -1347,57 +1495,33 @@
           <span class="tag">MongoDB</span>
           <span class="tag">React</span>
         </div>
-        <div class="project-status-badge status-active">Production</div>
+        <div class="card-footer">
+          <span class="card-type">Enterprise SaaS</span>
+          <span class="card-arrow">↗</span>
+        </div>
       </a>
 
       <a class="project-card" href="https://github.com/Tushar-programador" target="_blank" rel="noopener">
         <div class="tilt-shine"></div>
-        <div class="project-number">Project 02</div>
+        <div class="card-header">
+          <div class="project-number">Project 05</div>
+          <div class="project-status-badge status-completed">Completed</div>
+        </div>
         <div class="project-name">DNS Server</div>
         <div class="project-desc">
-          Custom DNS server implementation with full protocol support — A, MX, CNAME record types, 
-          intelligent caching, and load balancing. Built from the UDP layer up.
+          Custom DNS server built from the UDP layer up — full A, MX, and CNAME protocol support,
+          intelligent response caching, and load balancing. Deep dive into networking fundamentals.
         </div>
         <div class="project-tags">
           <span class="tag">Node.js</span>
-          <span class="tag">UDP</span>
+          <span class="tag">UDP/TCP</span>
           <span class="tag">DNS Protocol</span>
           <span class="tag">WSL Ubuntu</span>
         </div>
-        <div class="project-status-badge status-completed">Completed</div>
-      </a>
-
-      <a class="project-card" href="https://github.com/Tushar-programador" target="_blank" rel="noopener">
-        <div class="tilt-shine"></div>
-        <div class="project-number">Project 03</div>
-        <div class="project-name">Chat Realm</div>
-        <div class="project-desc">
-          Real-time MERN stack chat app with end-to-end encryption, file sharing, and user 
-          presence indicators. Built for seamless, secure communication at scale.
+        <div class="card-footer">
+          <span class="card-type">Networking / Systems</span>
+          <span class="card-arrow">↗</span>
         </div>
-        <div class="project-tags">
-          <span class="tag">MongoDB</span>
-          <span class="tag">Express</span>
-          <span class="tag">React</span>
-          <span class="tag">Socket.io</span>
-        </div>
-        <div class="project-status-badge status-development">In Development</div>
-      </a>
-
-      <a class="project-card" href="https://github.com/Tushar-programador" target="_blank" rel="noopener">
-        <div class="tilt-shine"></div>
-        <div class="project-number">Project 04</div>
-        <div class="project-name">KeepAnEye</div>
-        <div class="project-desc">
-          Website uptime monitoring tool with multi-user support, automated alerts, detailed 
-          uptime reports, and a full API for third-party integrations.
-        </div>
-        <div class="project-tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">Express</span>
-          <span class="tag">MongoDB</span>
-        </div>
-        <div class="project-status-badge status-development">In Development</div>
       </a>
 
     </div>
@@ -1413,54 +1537,70 @@
 
         <div class="skill-cat-card">
           <div class="skill-cat-title">Backend</div>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar-row"><span class="skill-bar-name">Node.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:92%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Express.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:90%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Socket.io</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:80%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">REST APIs</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:95%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">WebSockets</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:78%"></div></div></div>
+          <div class="skill-tags">
+            <span class="skill-tag core">Node.js</span>
+            <span class="skill-tag core">Go</span>
+            <span class="skill-tag core">Express.js</span>
+            <span class="skill-tag core">REST APIs</span>
+            <span class="skill-tag">gRPC</span>
+            <span class="skill-tag">WebSockets</span>
+            <span class="skill-tag">Socket.io</span>
           </div>
         </div>
 
         <div class="skill-cat-card">
           <div class="skill-cat-title">Frontend</div>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar-row"><span class="skill-bar-name">React.js</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:85%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">JavaScript</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:93%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">TypeScript</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:70%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">HTML / CSS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:90%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Tailwind</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:82%"></div></div></div>
+          <div class="skill-tags">
+            <span class="skill-tag core">React.js</span>
+            <span class="skill-tag core">JavaScript</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">HTML / CSS</span>
+            <span class="skill-tag">Tailwind</span>
           </div>
         </div>
 
         <div class="skill-cat-card">
           <div class="skill-cat-title">Databases</div>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar-row"><span class="skill-bar-name">MongoDB</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:90%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Redis</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:72%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">RDBMS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:68%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Mongoose</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:88%"></div></div></div>
+          <div class="skill-tags">
+            <span class="skill-tag core">MongoDB</span>
+            <span class="skill-tag core">Mongoose</span>
+            <span class="skill-tag">Redis</span>
+            <span class="skill-tag">SQL / RDBMS</span>
           </div>
         </div>
 
         <div class="skill-cat-card">
-          <div class="skill-cat-title">DevOps & Tools</div>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar-row"><span class="skill-bar-name">Docker</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:75%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Git / GitHub</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:92%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">CI/CD</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:70%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Nginx</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:65%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">Linux / WSL</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:80%"></div></div></div>
+          <div class="skill-cat-title">DevOps &amp; Tools</div>
+          <div class="skill-tags">
+            <span class="skill-tag core">Git / GitHub</span>
+            <span class="skill-tag core">Docker</span>
+            <span class="skill-tag">Linux / WSL</span>
+            <span class="skill-tag">Nginx</span>
+            <span class="skill-tag">CI/CD</span>
           </div>
         </div>
 
         <div class="skill-cat-card">
           <div class="skill-cat-title">Networking</div>
-          <div class="skill-bar-wrap">
-            <div class="skill-bar-row"><span class="skill-bar-name">DNS Protocols</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:85%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">UDP / TCP</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:80%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">nmap / ncat</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:72%"></div></div></div>
-            <div class="skill-bar-row"><span class="skill-bar-name">HTTP/HTTPS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="--skill-pct:90%"></div></div></div>
+          <div class="skill-tags">
+            <span class="skill-tag core">HTTP/HTTPS</span>
+            <span class="skill-tag core">DNS Protocols</span>
+            <span class="skill-tag">UDP / TCP</span>
+            <span class="skill-tag">nmap / ncat</span>
+          </div>
+        </div>
+
+        <div class="skill-cat-card featured-cat">
+          <div class="skill-cat-title">Backend Architecture</div>
+          <div class="skill-tags">
+            <span class="skill-tag core">System Design</span>
+            <span class="skill-tag core">Microservices</span>
+            <span class="skill-tag core">Payment Systems</span>
+            <span class="skill-tag">gRPC / Protobuf</span>
+            <span class="skill-tag">Distributed Systems</span>
+            <span class="skill-tag">API Design</span>
+            <span class="skill-tag">Caching</span>
+            <span class="skill-tag">Authentication</span>
           </div>
         </div>
 
@@ -1481,8 +1621,8 @@
       <h2 class="section-title">Let's Connect</h2>
       <div class="section-divider" style="margin: 1.5rem auto 2rem;"></div>
       <p style="color: var(--muted); line-height: 1.8; font-size: 1.05rem;">
-        Whether you have an idea to build, a problem to solve, or just want to talk tech — 
-        my inbox is always open. I'm currently open to new opportunities.
+        Whether you have a system to architect, a product to build, or just want to talk backend —
+        my inbox is always open.
       </p>
       <div class="contact-links">
         <a class="contact-link" href="mailto:tusharkalra307@gmail.com">
@@ -1498,11 +1638,22 @@
           ☎ +91-72064-05935
         </a>
       </div>
+      <div class="open-to-wrap">
+        <div class="open-to-label">Open to</div>
+        <div class="open-to-pills">
+          <span class="open-to-pill">Backend Engineer</span>
+          <span class="open-to-pill">Go Developer</span>
+          <span class="open-to-pill">Software Engineer</span>
+          <span class="open-to-pill">Node.js Developer</span>
+          <span class="open-to-pill">Platform Engineer</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
-    <p>Designed & Built by <strong style="color:var(--gold)">Tushar Kalra</strong> &nbsp;·&nbsp; 2025</p>
+    <p>Designed &amp; Built by <strong style="color:var(--gold)">Tushar Kalra</strong></p>
+    <p class="footer-sub">Backend Engineer &nbsp;·&nbsp; Go Developer &nbsp;·&nbsp; SaaS Builder</p>
   </footer>
 
   <!-- CDN SCRIPTS -->
@@ -1519,15 +1670,11 @@
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 500);
 
-    // Camera state machine
     const camState = {
-      // Default resting position
       baseX: 0, baseY: 10, baseZ: 44,
-      // Current actual position (lerped)
       x: 0, y: 10, z: 44,
-      // Zoom target (world space)
       zoomTarget: null,
-      zoomPhase: null,   // null | 'in' | 'hold' | 'out'
+      zoomPhase: null,
       zoomProgress: 0,
       zoomSection: null,
       zoomLabelName: '',
@@ -1636,7 +1783,6 @@
 
     let hoveredPlanet = null;
     let mouseX = 0, mouseY = 0;
-    // speedMultiplier: 0 (left edge) → 1 (center) → 3 (right edge)
     let speedMultiplier = 1;
     let isZooming = false;
     let paused = false;
@@ -1644,25 +1790,22 @@
 
     // ─── MOUSE MOVE ───────────────────────────────────────────────────────────
     window.addEventListener('mousemove', (e) => {
-      const nx = e.clientX / window.innerWidth; // 0..1
+      const nx = e.clientX / window.innerWidth;
       mouse.x = nx * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       mouseX = (nx - 0.5) * 2;
       mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 
-      // Speed: left half slows (0→1x), right half speeds up (1→3x)
       if (nx < 0.5) {
-        speedMultiplier = nx * 2;          // 0 .. 1
+        speedMultiplier = nx * 2;
       } else {
-        speedMultiplier = 1 + (nx - 0.5) * 4; // 1 .. 3
+        speedMultiplier = 1 + (nx - 0.5) * 4;
       }
 
-      // Update HUD
       const pct = Math.min(speedMultiplier / 3, 1) * 100;
       speedFill.style.width = pct + '%';
       speedValue.textContent = speedMultiplier.toFixed(1) + 'x';
 
-      // Hover detection (skip while zooming)
       if (!isZooming) {
         raycaster.setFromCamera(mouse, camera);
         const hits = raycaster.intersectObjects(planetMeshes);
@@ -1686,7 +1829,6 @@
         }
       }
 
-      // Move cursor glow
       glow.style.left = e.clientX + 'px';
       glow.style.top = e.clientY + 'px';
     });
@@ -1703,23 +1845,18 @@
       tooltip.style.opacity = '0';
       document.body.style.cursor = '';
 
-      // Get planet world position
       const worldPos = new THREE.Vector3();
       planet.getWorldPosition(worldPos);
 
-      // Direction from origin to planet, pull camera to 3x planet radius away
       const dir = worldPos.clone().normalize();
-      const zoomDist = planet.userData.baseColor ? planet.geometry.parameters.radius * 6 + 4 : 8;
       const zoomPos = worldPos.clone().add(dir.clone().multiplyScalar(planet.geometry.parameters.radius * 5 + 5));
 
-      // Overlay flash
       const cx = ((worldPos.x + 40) / 80 * 100).toFixed(1) + '%';
       const cy = (50).toFixed(1) + '%';
       zoomOverlay.style.setProperty('--ox', cx);
       zoomOverlay.style.setProperty('--oy', cy);
       zoomOverlay.classList.add('zooming');
 
-      // Zoom label
       zoomLabel.textContent = planet.userData.name;
       const screenX = (mouse.x * 0.5 + 0.5) * window.innerWidth;
       const screenY = (-mouse.y * 0.5 + 0.5) * window.innerHeight;
@@ -1727,7 +1864,6 @@
       zoomLabel.style.top = (screenY - 40) + 'px';
       zoomLabel.style.opacity = '1';
 
-      // Store zoom target
       camState.zoomTarget = zoomPos;
       camState.zoomLookAt = worldPos.clone();
       camState.zoomSection = planet.userData.section;
@@ -1756,9 +1892,7 @@
         planet.rotation.y += 0.008 * sp;
       });
 
-      // ── Camera logic ─────────────────────────────────────────────────────
       if (!isZooming) {
-        // Normal parallax + scroll
         const targetX = mouseX * 5;
         const targetY = -mouseY * 3 + 10 + scrollY * 0.004;
         camera.position.x = lerp(camera.position.x, targetX, 0.025);
@@ -1766,7 +1900,6 @@
         camera.position.z = lerp(camera.position.z, 44, 0.025);
         camera.lookAt(0, 0, 0);
       } else {
-        // Zoom phases
         camState.zoomProgress = Math.min(camState.zoomProgress + 0.018, 1);
         const ease = easeInOut(camState.zoomProgress);
 
@@ -1784,7 +1917,6 @@
           camera.lookAt(camState.zoomLookAt);
           camState.zoomProgress += 0.025;
           if (camState.zoomProgress >= 1) {
-            // Navigate section
             document.querySelector(camState.zoomSection).scrollIntoView({ behavior: 'smooth' });
             camState.zoomPhase = 'out';
             camState.zoomProgress = 0;
@@ -1817,7 +1949,7 @@
     // ─── CURSOR GLOW ──────────────────────────────────────────────────────────
     const glow = document.getElementById('cursorGlow');
 
-    // ─── CURSOR TRAIL — beam of light ─────────────────────────────────────────
+    // ─── CURSOR TRAIL ─────────────────────────────────────────────────────────
     (function initCursorTrail() {
       const tc = document.getElementById('cursor-trail');
       const ctx = tc.getContext('2d');
@@ -1829,13 +1961,11 @@
       resize();
       window.addEventListener('resize', resize);
 
-      // Circular buffer of cursor positions with timestamps
-      const TRAIL_LEN = 60
+      const TRAIL_LEN = 60;
       const trail = Array.from({length: TRAIL_LEN}, () => ({ x: -999, y: -999, t: 0 }));
       let tHead = 0;
 
-      // Particle pool
-      const POOL = 100
+      const POOL = 100;
       const particles = [];
       for (let i = 0; i < POOL; i++) {
         particles.push({ x: 0, y: 0, vx: 0, vy: 0, life: 0, maxLife: 1, size: 1, hue: 45 });
@@ -1863,8 +1993,6 @@
 
       function tick() {
         requestAnimationFrame(tick);
-
-        // ── Fully transparent clear — background always shows through ──────
         ctx.clearRect(0, 0, tc.width, tc.height);
 
         const dx = mx - pmx, dy = my - pmy;
@@ -1877,29 +2005,25 @@
         }
         pmx = mx; pmy = my;
 
-        // ── Beam: draw segment-by-segment with per-segment alpha ────────────
         const now = performance.now();
         ctx.save();
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        // Build ordered point list from circular buffer (oldest → newest)
         const pts = [];
         for (let i = 0; i < TRAIL_LEN; i++) {
           const pt = trail[(tHead - TRAIL_LEN + i + TRAIL_LEN * 10) % TRAIL_LEN];
           if (pt.x < -900) continue;
-          const age = (now - pt.t) / 320; // 0=new, 1=fade out at 320ms
+          const age = (now - pt.t) / 320;
           if (age > 1) continue;
           pts.push({ x: pt.x, y: pt.y, a: 1 - age });
         }
 
         if (pts.length >= 2) {
-          // Draw each segment individually so alpha can taper toward the tail
           for (let i = 1; i < pts.length; i++) {
-            const frac = i / pts.length; // 0=tail, 1=head
+            const frac = i / pts.length;
             const alpha = frac * pts[i].a;
 
-            // Outer glow
             ctx.beginPath();
             ctx.moveTo(pts[i-1].x, pts[i-1].y);
             ctx.lineTo(pts[i].x,   pts[i].y);
@@ -1907,7 +2031,6 @@
             ctx.lineWidth = 16;
             ctx.stroke();
 
-            // Mid beam
             ctx.beginPath();
             ctx.moveTo(pts[i-1].x, pts[i-1].y);
             ctx.lineTo(pts[i].x,   pts[i].y);
@@ -1915,7 +2038,6 @@
             ctx.lineWidth = 4;
             ctx.stroke();
 
-            // Bright core (only near the head)
             if (frac > 0.6) {
               const coreA = (frac - 0.6) / 0.4;
               ctx.beginPath();
@@ -1929,7 +2051,6 @@
         }
         ctx.restore();
 
-        // ── Particles ────────────────────────────────────────────────────────
         for (const p of particles) {
           if (p.life <= 0) continue;
           p.life--;
@@ -1950,9 +2071,7 @@
           ctx.fill();
         }
 
-        // ── Cursor dot ───────────────────────────────────────────────────────
         if (mx > -900) {
-          // Outer glow ring
           const og = ctx.createRadialGradient(mx, my, 0, mx, my, 14);
           og.addColorStop(0,   'rgba(245,200,66,0.35)');
           og.addColorStop(1,   'rgba(245,200,66,0)');
@@ -1960,13 +2079,11 @@
           ctx.arc(mx, my, 14, 0, Math.PI * 2);
           ctx.fillStyle = og;
           ctx.fill();
-          // Gold ring
           ctx.beginPath();
           ctx.arc(mx, my, 6, 0, Math.PI * 2);
           ctx.strokeStyle = 'rgba(255,220,80,0.85)';
           ctx.lineWidth = 1.5;
           ctx.stroke();
-          // White-hot centre
           ctx.beginPath();
           ctx.arc(mx, my, 2.5, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(255,255,255,0.95)';
@@ -2099,7 +2216,6 @@
     ];
 
     window.addEventListener('keydown', (e) => {
-      // Ignore when typing in an input
       if (document.activeElement.tagName === 'INPUT') return;
       const k = e.key;
 
@@ -2127,7 +2243,7 @@
     });
 
     // ═══════════════════════════════════════════════════════════════════════
-    //  EARTH EXPLORE — dedicated scrollable 3D globe scene
+    //  EARTH EXPLORE
     // ═══════════════════════════════════════════════════════════════════════
     (function initEarth() {
       const earthCanvas = document.getElementById('earth-canvas');
@@ -2144,21 +2260,18 @@
       eCamera.position.set(0, 0, 5);
       eCamera.lookAt(0, 0, 0);
 
-      // Lighting
       const eSun = new THREE.DirectionalLight(0xffeedd, 2.2);
       eSun.position.set(5, 3, 5);
       eSun.castShadow = true;
       eScene.add(eSun);
       eScene.add(new THREE.AmbientLight(0x112244, 0.9));
 
-      // ── Earth body (procedural land/ocean shader via canvas texture) ───────
       function buildEarthTexture() {
         const size = 512;
         const tc = document.createElement('canvas');
         tc.width = tc.height = size;
         const ctx = tc.getContext('2d');
 
-        // Deep ocean gradient
         const ocean = ctx.createLinearGradient(0, 0, size, size);
         ocean.addColorStop(0, '#0d2b52');
         ocean.addColorStop(0.5, '#1a4f8a');
@@ -2166,7 +2279,6 @@
         ctx.fillStyle = ocean;
         ctx.fillRect(0, 0, size, size);
 
-        // Continents — procedural blobs using arc fills
         ctx.fillStyle = '#2d6a2d';
         const landShapes = [
           [60,140,90,70],[120,80,110,55],[260,120,140,80],[310,200,100,60],
@@ -2187,7 +2299,6 @@
           ctx.closePath();
           ctx.fill();
 
-          // Green highlands
           ctx.fillStyle = '#3d8b3d';
           ctx.beginPath();
           ctx.ellipse(w*0.1, -h*0.15, w*0.25, h*0.2, 0.5, 0, Math.PI*2);
@@ -2196,12 +2307,10 @@
           ctx.restore();
         });
 
-        // Ice caps
         ctx.fillStyle = 'rgba(220,235,255,0.7)';
         ctx.fillRect(0, 0, size, 30);
         ctx.fillRect(0, size - 30, size, 30);
 
-        // Cloud wisps (optional layer baked in)
         ctx.fillStyle = 'rgba(255,255,255,0.12)';
         for (let i = 0; i < 18; i++) {
           ctx.save();
@@ -2215,7 +2324,6 @@
         return new THREE.CanvasTexture(tc);
       }
 
-      // ── Separate cloud layer canvas ────────────────────────────────────────
       function buildCloudTexture() {
         const size = 512;
         const tc = document.createElement('canvas');
@@ -2239,7 +2347,6 @@
       const earthTex = buildEarthTexture();
       const cloudTex = buildCloudTexture();
 
-      // Earth sphere
       const earthGeo = new THREE.SphereGeometry(1, 64, 64);
       const earthMat = new THREE.MeshPhongMaterial({
         map: earthTex,
@@ -2250,7 +2357,6 @@
       earthMesh.rotation.z = 0.41;
       eScene.add(earthMesh);
 
-      // Cloud shell
       const cloudGeo = new THREE.SphereGeometry(1.025, 48, 48);
       const cloudMat = new THREE.MeshPhongMaterial({
         map: cloudTex, transparent: true, opacity: 0.55,
@@ -2259,14 +2365,12 @@
       const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
       eScene.add(cloudMesh);
 
-      // Atmosphere glow — 3 layers
       [[1.08, 0x4fc3f7, 0.12], [1.14, 0x2277cc, 0.07], [1.22, 0x113355, 0.04]].forEach(([r, col, op]) => {
         const g = new THREE.SphereGeometry(r, 32, 32);
         const m = new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: op, side: THREE.BackSide });
         eScene.add(new THREE.Mesh(g, m));
       });
 
-      // Orbit ring decorations — thin latitude rings
       [0.35, 0.6, 0.85].forEach(t => {
         const angle = (t - 0.5) * Math.PI * 0.8;
         const r = Math.cos(angle) * 1.04;
@@ -2279,7 +2383,6 @@
         eScene.add(ring);
       });
 
-      // Shooting star particles around earth
       const ssCount = 200;
       const ssPos = new Float32Array(ssCount * 3);
       for (let i = 0; i < ssCount; i++) {
@@ -2292,35 +2395,25 @@
       const ssMat = new THREE.PointsMaterial({ color: 0xaaddff, size: 0.04, transparent: true, opacity: 0.7 });
       eScene.add(new THREE.Points(ssGeo, ssMat));
 
-      // ── Scroll-driven zoom ────────────────────────────────────────────────
-      // As user scrolls through earth-stage, camera zooms from z=5 down to z=1.8
       const stageTop = () => earthStage.getBoundingClientRect().top + window.scrollY;
       const stageH = () => earthStage.offsetHeight;
-
-      let earthScrollProgress = 0;
-      let earthAutoSpin = 0;
 
       function updateEarthScroll() {
         const relScroll = window.scrollY - stageTop() + window.innerHeight * 0.6;
         const p = Math.max(0, Math.min(1, relScroll / stageH()));
-        earthScrollProgress = p;
 
-        // Camera zoom: 5 → 2.2 as p: 0 → 1
         const targetZ = 5 - p * 2.8;
         eCamera.position.z += (targetZ - eCamera.position.z) * 0.08;
 
-        // Tilt the earth gently while scrolling
         earthMesh.rotation.x = p * 0.5;
         cloudMesh.rotation.x = p * 0.4;
 
-        // Show stage caption
         if (p > 0.05 && p < 0.95) earthStage.classList.add('visible');
         else earthStage.classList.remove('visible');
       }
 
       window.addEventListener('scroll', updateEarthScroll, { passive: true });
 
-      // ── Click to see "from above" easter egg ──────────────────────────────
       earthCanvas.style.pointerEvents = 'auto';
       let earthClicked = false;
       earthCanvas.addEventListener('click', () => {
@@ -2330,7 +2423,6 @@
           update: () => eCamera.lookAt(0, 0, 0) });
       });
 
-      // ── Resize ──────────────────────────────────────────────────────────
       function onEarthResize() {
         const w = earthCanvas.offsetWidth, h = earthCanvas.offsetHeight;
         eCamera.aspect = w / h;
@@ -2339,21 +2431,16 @@
       }
       window.addEventListener('resize', onEarthResize);
 
-      // ── Render loop ──────────────────────────────────────────────────────
       let earthMouseX = 0, earthMouseY = 0;
       window.addEventListener('mousemove', (e) => {
         earthMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
         earthMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
       });
 
-      const earthClock = { t: 0 };
       function earthAnimate() {
         requestAnimationFrame(earthAnimate);
-        earthClock.t += 0.005;
-        // Self rotation
         earthMesh.rotation.y += 0.0018;
         cloudMesh.rotation.y += 0.0022;
-        // Gentle mouse parallax
         eScene.rotation.y += (earthMouseX * 0.3 - eScene.rotation.y) * 0.02;
         eScene.rotation.x += (-earthMouseY * 0.15 - eScene.rotation.x) * 0.02;
         eRenderer.render(eScene, eCamera);
@@ -2362,7 +2449,7 @@
     })();
 
     // ═══════════════════════════════════════════════════════════════════════
-    //  ANIME.JS POWERED ANIMATIONS
+    //  ANIME.JS ANIMATIONS
     // ═══════════════════════════════════════════════════════════════════════
 
     // ─── PAGE LOADER ────────────────────────────────────────────────────────
@@ -2403,7 +2490,6 @@
 
     // ─── POST-LOADER ENTRANCE SEQUENCE ──────────────────────────────────────
     function startPageAnimations() {
-      // Open-to-work badge slides in
       anime({
         targets: '#otw-badge',
         opacity: [0, 1],
@@ -2413,10 +2499,8 @@
         easing: 'easeOutExpo',
       });
 
-      // Animate hero eyebrow
       splitAndAnimate('.hero-eyebrow', 30);
 
-      // Animate hero name as a WHOLE element (splitting breaks background-clip:text gradient)
       anime({
         targets: '.hero-name',
         opacity: [0, 1],
@@ -2425,7 +2509,6 @@
         delay: 200,
         easing: 'easeOutExpo',
       });
-      // Gold shimmer pulse after name appears
       setTimeout(() => {
         anime({
           targets: '.hero-name',
@@ -2435,34 +2518,49 @@
         });
       }, 1300);
 
-      // Typewriter for hero title — fade in the wrapper first, then start typing
+      anime({
+        targets: '.hero-role',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 700,
+        delay: 350,
+        easing: 'easeOutExpo',
+      });
+
+      anime({
+        targets: '.hero-sub',
+        opacity: [0, 1],
+        translateY: [10, 0],
+        duration: 600,
+        delay: 480,
+        easing: 'easeOutExpo',
+      });
+
       anime({
         targets: '#typewriter-wrap',
         opacity: [0, 1],
         translateY: [20, 0],
         duration: 700,
-        delay: 400,
+        delay: 550,
         easing: 'easeOutExpo',
         complete: startTypewriter,
       });
 
-      // Hero meta (location / company / edu)
       anime({
         targets: '.hero-meta',
         opacity: [0, 1],
         translateY: [18, 0],
         duration: 700,
-        delay: 600,
+        delay: 700,
         easing: 'easeOutExpo',
       });
 
-      // CTA buttons
       anime({
         targets: '.hero-cta',
         opacity: [0, 1],
         translateY: [18, 0],
         duration: 700,
-        delay: 800,
+        delay: 900,
         easing: 'easeOutExpo',
       });
     }
@@ -2476,7 +2574,7 @@
       [...text].forEach(ch => {
         const span = document.createElement('span');
         span.className = 'split-char';
-        span.textContent = ch === ' ' ? '\u00a0' : ch;
+        span.textContent = ch === ' ' ? ' ' : ch;
         el.appendChild(span);
       });
       anime({
@@ -2492,11 +2590,13 @@
 
     // ─── TYPEWRITER ──────────────────────────────────────────────────────────
     const twTexts = [
-      'Fullstack Developer',
-      'Node.js Architect',
-      'Real-time Systems Builder',
-      'DNS & Network Engineer',
-      'React & MongoDB Expert',
+      'Backend Engineer',
+      'Go Developer',
+      'Node.js Developer',
+      'SaaS Builder',
+      'Payment Infrastructure Explorer',
+      'System Design Enthusiast',
+      'Building Scalable Systems',
     ];
     let twIdx = 0;
     let twCharIdx = 0;
@@ -2531,10 +2631,10 @@
 
     // ─── STAT COUNTER ANIMATION ──────────────────────────────────────────────
     const statData = [
-      { selector: '.stat-card:nth-child(1) .stat-number', target: 1, suffix: '+', label: 'yr' },
-      { selector: '.stat-card:nth-child(2) .stat-number', target: 3, suffix: '+', label: '' },
-      { selector: '.stat-card:nth-child(3) .stat-number', target: 60, suffix: '%', label: '' },
-      { selector: '.stat-card:nth-child(4) .stat-number', target: 50, suffix: '%', label: '' },
+      { target: 1, suffix: '+' },
+      { target: 8, suffix: '+' },
+      { target: 60, suffix: '%' },
+      { target: 50, suffix: '%' },
     ];
 
     const statObserverAnime = new IntersectionObserver((entries) => {
@@ -2589,7 +2689,7 @@
         [...text].forEach(ch => {
           const s = document.createElement('span');
           s.className = 'split-char';
-          s.textContent = ch === ' ' ? '\u00a0' : ch;
+          s.textContent = ch === ' ' ? ' ' : ch;
           title.appendChild(s);
         });
         anime({
