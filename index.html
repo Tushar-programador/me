@@ -17,7 +17,7 @@
       --accent: #4fc3f7;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; }
 
     body {
       background: var(--dark);
@@ -1468,10 +1468,16 @@
           <div class="project-number">Project 01</div>
           <div class="project-status-badge status-active">Production</div>
         </div>
-        <div class="project-name">Relook</div>
+        <div class="project-name">RElook</div>
         <div class="project-desc">
-          Customer testimonial SaaS platform — collect video, audio, and text testimonials with
-          OTP verification, media uploads, moderation workflows, analytics, and embeddable widgets.
+          A multi-tenant SaaS platform where businesses collect, moderate, and publish customer
+          testimonials in video, audio, and text formats. Each business account has fully isolated
+          data with its own branding config. OTP-based authentication handles both business owners
+          and their customers. Media uploads go through a Cloudinary pipeline that validates format,
+          enforces size limits, and generates thumbnails. Admins get a moderation queue to approve
+          or reject submissions before they go live. An embeddable widget API generates a snippet
+          any site can drop in to display live testimonials — no frontend rebuild needed.
+          Usage analytics (submissions, views, conversion) are tracked per account.
         </div>
         <div class="project-tags">
           <span class="tag">React</span>
@@ -1479,6 +1485,8 @@
           <span class="tag">Express</span>
           <span class="tag">MongoDB</span>
           <span class="tag">Cloudinary</span>
+          <span class="tag">OTP Auth</span>
+          <span class="tag">Multi-tenant</span>
         </div>
         <div class="card-footer">
           <span class="card-type">SaaS Platform</span>
@@ -1486,43 +1494,29 @@
         </div>
       </a>
 
-      <a class="project-card" href="https://github.com/Tushar-programador/payment-gateway" target="_blank" rel="noopener">
+      <a class="project-card" href="https://github.com/Tushar-programador/outdraw" target="_blank" rel="noopener">
         <div class="tilt-shine"></div>
         <div class="card-header">
           <div class="project-number">Project 02</div>
           <div class="project-status-badge status-development">In Development</div>
         </div>
-        <div class="project-name">Payment Gateway</div>
-        <div class="project-desc">
-          Modern payment infrastructure — merchant onboarding, transaction lifecycle management,
-          payment processing, webhooks, settlement workflows, and secure authenticated APIs.
-        </div>
-        <div class="project-tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">REST APIs</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-type">Fintech / Infrastructure</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://github.com/Tushar-programador/draw" target="_blank" rel="noopener">
-        <div class="tilt-shine"></div>
-        <div class="card-header">   
-          <div class="project-number">Project 03</div>
-          <div class="project-status-badge status-development">In Development</div>
-        </div>
         <div class="project-name">Outdraw</div>
         <div class="project-desc">
-          Cloud application platform — applications run in the cloud with centrally managed user data,
-          multi-tenant architecture, application orchestration, and scalable cloud-native design.
+          A cloud application platform where developers deploy apps that run entirely in the cloud
+          with centrally governed user data — similar in spirit to Replit or Railway but built
+          around data ownership. The Go service handles app registration, Docker container
+          lifecycle (spawn, health-check, teardown), and request routing to the right container
+          per user session. The Node.js control plane manages authentication, user-to-app
+          binding, and multi-tenant session isolation so users never cross data boundaries.
+          The goal: developers push code, users get a running app — no infra knowledge required.
         </div>
         <div class="project-tags">
-          <span class="tag">Node.js</span>
           <span class="tag">Go</span>
+          <span class="tag">Node.js</span>
           <span class="tag">Docker</span>
+          <span class="tag">Multi-tenant</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">JWT Auth</span>
         </div>
         <div class="card-footer">
           <span class="card-type">Cloud Platform</span>
@@ -1533,48 +1527,33 @@
       <a class="project-card" href="https://github.com/Tushar-programador" target="_blank" rel="noopener">
         <div class="tilt-shine"></div>
         <div class="card-header">
-          <div class="project-number">Project 04</div>
+          <div class="project-number">Project 03</div>
           <div class="project-status-badge status-active">Production</div>
         </div>
         <div class="project-name">ICMS — Inventory &amp; Chain Management</div>
         <div class="project-desc">
-          Enterprise-grade invoice and chain management system. Barcode scanning, real-time sync across
-          devices, analytics dashboards, and automated data validation.
+          An enterprise backend system built at Vervebot.io and running in production. Manages
+          inventory, supply chain, and invoicing for a real business. Barcode scanners hit the
+          REST API directly — product data lands in MongoDB without a human typing it, cutting
+          manual entry by 60%. Invoice generation is automated end-to-end: line items are resolved
+          from inventory, tax is calculated, a PDF is produced and stored, and the record is
+          reconciled — reducing processing time by 50%. A WebSocket layer keeps warehouse and
+          office dashboards in sync in real time. MongoDB aggregation pipelines back the analytics
+          module management uses for restocking and sales decisions every day.
         </div>
         <div class="project-tags">
           <span class="tag">Node.js</span>
           <span class="tag">Express</span>
           <span class="tag">MongoDB</span>
           <span class="tag">React</span>
+          <span class="tag">WebSockets</span>
+          <span class="tag">REST APIs</span>
         </div>
         <div class="card-footer">
-          <span class="card-type">Enterprise SaaS</span>
+          <span class="card-type">Enterprise SaaS · Production</span>
           <span class="card-arrow">↗</span>
         </div>
       </a>
-
-      <!-- <a class="project-card" href="https://github.com/Tushar-programador/DNS-server" target="_blank" rel="noopener">
-        <div class="tilt-shine"></div>
-        <div class="card-header">
-          <div class="project-number">Project 05</div>
-          <div class="project-status-badge status-completed">Completed</div>
-        </div>
-        <div class="project-name">DNS Server</div>
-        <div class="project-desc">
-          Custom DNS server built from the UDP layer up — full A, MX, and CNAME protocol support,
-          intelligent response caching, and load balancing. Deep dive into networking fundamentals.
-        </div>
-        <div class="project-tags">
-          <span class="tag">Node.js</span>
-          <span class="tag">UDP/TCP</span>
-          <span class="tag">DNS Protocol</span>
-          <span class="tag">WSL Ubuntu</span>
-        </div>
-        <div class="card-footer">
-          <span class="card-type">Networking / Systems</span>
-          <span class="card-arrow">↗</span>
-        </div>
-      </a> -->
 
     </div>
   </section>
@@ -1723,16 +1702,16 @@
   <script>
     // ─── LENIS SMOOTH SCROLL ─────────────────────────────────────────────────
     const lenis = new Lenis({
-      duration: 1.25,
-      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.08,          // frame-by-frame interpolation — smoother than duration/easing
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.8,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 2,
+      syncToNative: false,
     });
     (function lenisFrame(time) {
       lenis.raf(time);
       requestAnimationFrame(lenisFrame);
-    })(0);
+    })(performance.now());
 
     // ─── RENDERER ────────────────────────────────────────────────────────────
     const canvas = document.getElementById('bg-canvas');
