@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tushar Kalra — Backend Engineer Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Screen styles (browser preview) ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0d0d0d;
+      --sub:    #444;
+      --faint:  #999;
+      --rule:   #ddd;
+      --accent: #0a2540;
+      --gold:   #c8962a;
+      --page:   #ffffff;
+    }
+
+    html { background: #e8e8e8; font-size: 15px; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: #e8e8e8;
+      color: var(--ink);
+      padding: 2.5rem 1rem;
+      line-height: 1.55;
+    }
+
+    /* Paper card */
+    .page {
+      background: var(--page);
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3rem 3.2rem 3.5rem;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+    }
+
+    /* ── Print bar ──────────────────────────────────────────────────── */
+    .print-bar {
+      max-width: 820px;
+      margin: 0 auto 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+    }
+
+    .print-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      padding: 0.45rem 1.1rem;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .print-btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .print-btn-primary:hover { background: #0e3560; }
+
+    .print-btn-secondary {
+      background: transparent;
+      border: 1px solid #bbb;
+      color: var(--sub);
+    }
+    .print-btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    .header { border-bottom: 2px solid var(--accent); padding-bottom: 1.4rem; margin-bottom: 1.6rem; }
+
+    .name {
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.3px;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1.5rem;
+      font-size: 0.82rem;
+      color: var(--sub);
+    }
+
+    .contact-row a {
+      color: var(--sub);
+      text-decoration: none;
+    }
+    .contact-row a:hover { color: var(--accent); text-decoration: underline; }
+
+    .contact-sep { color: var(--rule); }
+
+    /* ── Sections ────────────────────────────────────────────────────── */
+    .section { margin-bottom: 1.6rem; }
+
+    .section-heading {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Summary ─────────────────────────────────────────────────────── */
+    .summary {
+      font-size: 0.9rem;
+      color: var(--sub);
+      line-height: 1.75;
+    }
+
+    /* ── Experience / Projects ──────────────────────────────────────── */
+    .entry { margin-bottom: 1.3rem; }
+    .entry:last-child { margin-bottom: 0; }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .entry-title {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .entry-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--faint);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .entry-org {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .entry-tech {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--faint);
+      margin-bottom: 0.5rem;
+    }
+
+    .bullets {
+      list-style: none;
+      padding: 0;
+    }
+
+    .bullets li {
+      font-size: 0.875rem;
+      color: var(--sub);
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.3rem;
+      line-height: 1.65;
+    }
+
+    .bullets li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ── Skills ──────────────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem 2.5rem;
+    }
+
+    .skill-row {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .skill-label {
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      min-width: 130px;
+    }
+
+    .skill-value { color: var(--sub); }
+
+    /* ── Education ───────────────────────────────────────────────────── */
+    .edu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.875rem;
+    }
+
+    .edu-degree { font-weight: 600; }
+    .edu-school { color: var(--sub); }
+    .edu-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--faint);
+    }
+
+    /* ── Certifications / Links ──────────────────────────────────────── */
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    .links-row a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .links-row a:hover { text-decoration: underline; }
+
+    /* ── Print styles ────────────────────────────────────────────────── */
+    @media print {
+      html { background: white; font-size: 10.5pt; }
+      body { background: white; padding: 0; }
+      .print-bar { display: none; }
+      .page {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+        margin: 0;
+      }
+
+      /* Force black for ATS parsers */
+      .name    { color: #000; }
+      .title   { color: #333; }
+      .section-heading { color: #000; border-bottom-color: #000; }
+      .entry-org { color: #333; }
+      .entry-title { color: #000; }
+      .bullets li::before { color: #000; }
+      .skill-label { color: #000; }
+
+      a { color: #000 !important; text-decoration: none; }
+
+      /* Prevent page breaks inside entries */
+      .entry { break-inside: avoid; }
+      .section { break-inside: avoid; }
+    }
+
+    @page {
+      margin: 0.7in 0.75in;
+      size: letter;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print/Download bar (hidden on print) -->
+  <div class="print-bar">
+    <a href="index.html" class="print-btn print-btn-secondary">← Back to Portfolio</a>
+    <button class="print-btn print-btn-primary" onclick="window.print()">Save as PDF ↓</button>
+  </div>
+
+  <div class="page">
+
+    <!-- ── HEADER ──────────────────────────────────────────────────── -->
+    <header class="header">
+      <h1 class="name">Tushar Kalra</h1>
+      <p class="title">Backend Engineer &nbsp;|&nbsp; Go &amp; Node.js Developer &nbsp;|&nbsp; SaaS Builder</p>
+      <div class="contact-row">
+        <span>📍 Gurugram, Haryana, India</span>
+        <span class="contact-sep">|</span>
+        <a href="mailto:tusharkalra307@gmail.com">tusharkalra307@gmail.com</a>
+        <span class="contact-sep">|</span>
+        <a href="tel:+917206405935">+91-72064-05935</a>
+        <span class="contact-sep">|</span>
+        <a href="https://github.com/Tushar-programador" target="_blank">github.com/Tushar-programador</a>
+        <span class="contact-sep">|</span>
+        <a href="https://www.linkedin.com/in/tushar-kalra-developer/" target="_blank">linkedin.com/in/tushar-kalra-developer</a>
+      </div>
+    </header>
+
+    <!-- ── PROFESSIONAL SUMMARY ─────────────────────────────────────── -->
+    <section class="section" aria-label="Professional Summary">
+      <h2 class="section-heading">Professional Summary</h2>
+      <p class="summary">
+        Backend Engineer with 1+ year of professional experience building production-grade systems using
+        <strong>Go</strong>, <strong>Node.js</strong>, <strong>Express.js</strong>, and <strong>MongoDB</strong>.
+        Specializes in RESTful API design, microservices architecture, distributed systems, and SaaS platform development.
+        Proven track record of reducing manual workflows by 60% and improving processing performance by 50% through
+        backend automation and API optimization. Passionate about payment infrastructure, gRPC, system design,
+        and building scalable software from the ground up.
+        Open to Backend Engineer, Software Engineer, Go Developer, and Node.js Developer roles.
+      </p>
+    </section>
+
+    <!-- ── TECHNICAL SKILLS ─────────────────────────────────────────── -->
+    <section class="section" aria-label="Technical Skills">
+      <h2 class="section-heading">Technical Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <span class="skill-label">Languages:</span>
+          <span class="skill-value">Go (Golang), JavaScript (ES2022+), TypeScript, SQL</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Backend:</span>
+          <span class="skill-value">Node.js, Express.js, gRPC, REST APIs, WebSockets, Socket.io</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Frontend:</span>
+          <span class="skill-value">React.js, HTML5, CSS3, Tailwind CSS</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Databases:</span>
+          <span class="skill-value">MongoDB, Mongoose, Redis, MySQL / PostgreSQL</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">DevOps / Cloud:</span>
+          <span class="skill-value">Docker, Git, GitHub, Nginx, CI/CD, Linux, WSL</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Architecture:</span>
+          <span class="skill-value">Microservices, Distributed Systems, System Design, API Design</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Protocols:</span>
+          <span class="skill-value">HTTP/HTTPS, DNS, TCP/UDP, gRPC, Protocol Buffers</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Specializations:</span>
+          <span class="skill-value">Payment Systems, SaaS Platforms, Authentication, Caching, Real-time Systems</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROFESSIONAL EXPERIENCE ──────────────────────────────────── -->
+    <section class="section" aria-label="Professional Experience">
+      <h2 class="section-heading">Professional Experience</h2>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Software Engineer</span>
+          <span class="entry-date">November 2024 – Present</span>
+        </div>
+        <div class="entry-org">Vervebot.io &nbsp;·&nbsp; Gurugram, India (Full-time)</div>
+        <ul class="bullets">
+          <li>Owned backend architecture and API design for a full-stack Inventory &amp; Chain Management System (ICMS) serving live production traffic.</li>
+          <li>Designed and implemented RESTful APIs consumed by web clients and barcode-scanning hardware, reducing manual data entry by <strong>60%</strong>.</li>
+          <li>Automated end-to-end invoice generation and business workflow logic, cutting invoice processing time by over <strong>50%</strong>.</li>
+          <li>Built a real-time application health monitoring system using Node.js and WebSockets for uptime alerts and diagnostics.</li>
+          <li>Delivered analytics and reporting modules with aggregation pipelines (MongoDB) enabling data-driven business decisions.</li>
+          <li>Maintained and improved core platform reliability, performance, and scalability for production users.</li>
+          <li>Collaborated cross-functionally with product and operations teams to ship features on tight deadlines.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ──────────────────────────────────────────────────── -->
+    <section class="section" aria-label="Projects">
+      <h2 class="section-heading">Projects</h2>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">RElook — Customer Testimonial SaaS Platform</span>
+          <span class="entry-date">2025 · Production</span>
+        </div>
+        <p class="entry-tech">React · Node.js · Express.js · MongoDB · Cloudinary · REST API · Authentication · OTP Verification</p>
+        <ul class="bullets">
+          <li>Built a full-stack SaaS platform for collecting and managing video, audio, and text customer testimonials.</li>
+          <li>Implemented OTP-based authentication, media upload pipelines via Cloudinary, moderation workflows, analytics dashboard, and embeddable widget API.</li>
+          <li>Deployed to production with multi-tenant architecture supporting multiple business accounts.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Payment Gateway — Payment Infrastructure System</span>
+          <span class="entry-date">2025 · In Development</span>
+        </div>
+        <p class="entry-tech">Node.js · MongoDB · REST APIs · Webhooks · Authentication · Payment Processing</p>
+        <ul class="bullets">
+          <li>Designed and built a payment gateway inspired by modern payment platforms (Stripe/Razorpay architecture).</li>
+          <li>Implemented merchant onboarding, full transaction lifecycle management, webhook delivery, payment processing logic, and settlement workflows.</li>
+          <li>Engineered secure authenticated APIs with idempotency handling and fraud-prevention patterns.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Outdraw — Cloud Application Platform</span>
+          <span class="entry-date">2025 · In Development</span>
+        </div>
+        <p class="entry-tech">Node.js · Go · Docker · Multi-tenant Architecture · Cloud-native · Authentication</p>
+        <ul class="bullets">
+          <li>Architecting a cloud platform where applications run in managed cloud environments with centrally governed user data.</li>
+          <li>Focusing on application orchestration, scalable multi-tenant systems, cloud-native design patterns, and container management with Docker.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">DNS Server — Custom Protocol Implementation</span>
+          <span class="entry-date">2024 · Completed</span>
+        </div>
+        <p class="entry-tech">Node.js · UDP · DNS Protocol · TCP · Caching · Load Balancing · WSL Ubuntu</p>
+        <ul class="bullets">
+          <li>Built a fully functional DNS server from the UDP transport layer up, supporting A, MX, and CNAME record types.</li>
+          <li>Implemented intelligent response caching to reduce external resolver round-trips and basic load balancing across upstream resolvers.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── EDUCATION ─────────────────────────────────────────────────── -->
+    <section class="section" aria-label="Education">
+      <h2 class="section-heading">Education</h2>
+      <div class="entry">
+        <div class="edu-row">
+          <div>
+            <span class="edu-degree">Bachelor of Computer Applications (BCA)</span>
+            <span> &nbsp;·&nbsp; </span>
+            <span class="edu-school">Kurukshetra University, Haryana, India</span>
+          </div>
+          <span class="edu-year">2022 – 2025</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LINKS ─────────────────────────────────────────────────────── -->
+    <section class="section" aria-label="Links">
+      <h2 class="section-heading">Links</h2>
+      <div class="links-row">
+        <a href="https://github.com/Tushar-programador" target="_blank">GitHub: github.com/Tushar-programador</a>
+        <a href="https://www.linkedin.com/in/tushar-kalra-developer/" target="_blank">LinkedIn: linkedin.com/in/tushar-kalra-developer</a>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
