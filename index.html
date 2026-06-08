@@ -184,6 +184,54 @@
       color: var(--gold);
     }
 
+    /* ─── DOWNLOAD CV BUTTON ─── */
+    .btn-dl {
+      position: relative;
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid rgba(245,200,66,0.45);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      overflow: hidden;
+    }
+
+    .btn-dl::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateY(101%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+
+    .btn-dl:hover::before { transform: translateY(0); }
+    .btn-dl:hover { color: #000; border-color: var(--gold); }
+
+    .btn-dl-text,
+    .btn-dl-arrow {
+      position: relative;
+      z-index: 1;
+      transition: color 0.38s;
+    }
+
+    .btn-dl-arrow {
+      font-size: 0.95rem;
+      animation: dlBounce 2s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    .btn-dl:hover .btn-dl-arrow {
+      animation: none;
+      transform: translateY(2px);
+    }
+
+    @keyframes dlBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(4px); }
+    }
+
     .scroll-hint {
       position: absolute;
       bottom: 2.5rem;
@@ -1271,6 +1319,10 @@
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary ripple-btn">See My Work</a>
       <a href="#contact" class="btn btn-outline ripple-btn">Get In Touch</a>
+      <a href="resume.pdf" download="Tushar_Kalra_Resume.pdf" class="btn btn-dl ripple-btn">
+        <span class="btn-dl-text">Download CV</span>
+        <span class="btn-dl-arrow">↓</span>
+      </a>
     </div>
     <div class="planet-hint">✦ Click a planet to explore ✦</div>
     <div class="scroll-hint">Scroll</div>
@@ -1638,6 +1690,13 @@
           ☎ +91-72064-05935
         </a>
       </div>
+      <div style="margin-top: 2rem;">
+        <a href="resume.pdf" download="Tushar_Kalra_Resume.pdf" class="btn btn-dl ripple-btn" style="margin: 0 auto; justify-content: center;">
+          <span class="btn-dl-text">Download Resume</span>
+          <span class="btn-dl-arrow">↓</span>
+        </a>
+      </div>
+
       <div class="open-to-wrap">
         <div class="open-to-label">Open to</div>
         <div class="open-to-pills">
