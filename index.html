@@ -785,7 +785,7 @@
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">See My Work</a>
       <a href="#contact" class="btn btn-outline">Get In Touch</a>
-      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text">Download CV ↓</a>
+      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text dl-pdf">Download CV ↓</a>
     </div>
     <div class="scroll-hint">Scroll</div>
   </section>
@@ -1111,7 +1111,7 @@
         <a class="contact-link" href="https://www.linkedin.com/in/tushar-kalra-developer/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="contact-link" href="tel:+917206405935">+91-72064-05935</a>
       </div>
-      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text">Download Resume ↓</a>
+      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text dl-pdf">Download Resume ↓</a>
 
       <div class="open-to-wrap">
         <div class="open-to-label">Open to</div>
@@ -1284,6 +1284,32 @@
     }));
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { navToggle.classList.remove('open'); mobileMenu.classList.remove('open'); }
+    });
+
+    // ─── FORCE PDF DOWNLOAD ────────────────────────────────────────────────
+    // The native `download` attribute is ignored by Chromium when the page
+    // itself is loaded over file:// (a deliberate security restriction), so
+    // force it via a fetched blob instead. If the fetch itself is blocked
+    // (also possible under file://), fall back to just opening the PDF.
+    document.querySelectorAll('.dl-pdf').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        const filename = link.getAttribute('download') || 'resume.pdf';
+        fetch(href)
+          .then(res => { if (!res.ok) throw new Error('fetch failed'); return res.blob(); })
+          .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 4000);
+          })
+          .catch(() => window.open(href, '_blank'));
+      });
     });
 
     // ─── INCIDENT RESPONSE GAME ───────────────────────────────────────────────
