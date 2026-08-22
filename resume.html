@@ -108,7 +108,79 @@
     /* ═══════════════════════════════════════════════════════════════════
        PRINT  —  everything below controls the PDF output
     ═══════════════════════════════════════════════════════════════════ */
+    /* ── Squash the Bug ──────────────────────────────────────────────── */
+    .print-btn.pb-fun { background: transparent; border: 1px solid rgba(184,132,31,0.4); color: var(--gold); }
+    .print-btn.pb-fun:hover { border-color: var(--gold); background: rgba(184,132,31,0.08); }
+
+    #bug-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(13,13,13,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    #bug-overlay.open { opacity: 1; pointer-events: all; }
+    #bug-panel {
+      background: #fff;
+      border-radius: 6px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    }
+    #bug-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--accent);
+      padding-bottom: 0.7rem;
+      margin-bottom: 1.1rem;
+    }
+    #bug-head-title { font-weight: 700; color: var(--accent); font-size: 1.05rem; }
+    #bug-close { background: none; border: none; cursor: pointer; color: var(--faint); font-size: 1rem; }
+    #bug-close:hover { color: var(--accent); }
+    #bug-intro p { font-size: 0.85rem; color: var(--sub); line-height: 1.65; margin-bottom: 1.2rem; }
+    #bug-meta {
+      display: flex; justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--sub);
+      margin-bottom: 0.5rem;
+    }
+    #bug-timer-track { height: 3px; background: var(--rule); border-radius: 2px; margin-bottom: 0.9rem; overflow: hidden; }
+    #bug-timer-fill { height: 100%; width: 100%; background: var(--gold); transition: width 0.1s linear; }
+    #bug-field {
+      position: relative;
+      height: 260px;
+      background: #fafafa;
+      border: 1px dashed var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .bug {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.7rem;
+      line-height: 1;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .bug.squashed { transform: translate(-50%, -50%) scale(0.2) rotate(20deg); opacity: 0; }
+    #bug-end-score { font-size: 2rem; font-weight: 700; color: var(--accent); text-align: center; margin-bottom: 0.4rem; }
+    #bug-end-msg { text-align: center; color: var(--sub); font-size: 0.85rem; margin-bottom: 1.4rem; }
+    #bug-end-actions { display: flex; gap: 0.8rem; justify-content: center; }
+
     @media print {
+      #bug-overlay { display: none !important; }
       html, body { background: #fff; font-size: 9.5pt; padding: 0; margin: 0; }
       .print-bar { display: none !important; }
       .page { box-shadow: none; padding: 0; max-width: 100%; margin: 0; }
@@ -136,7 +208,41 @@
 
   <div class="print-bar">
     <a href="index.html" class="print-btn pb-secondary">← Portfolio</a>
+    <button class="print-btn pb-fun" id="bug-trigger">🐛 Squash Bugs</button>
     <button class="print-btn pb-primary" onclick="window.print()">Save as PDF ↓</button>
+  </div>
+
+  <!-- SQUASH THE BUG -->
+  <div id="bug-overlay">
+    <div id="bug-panel" role="dialog" aria-modal="true" aria-label="Squash the Bug game">
+      <div id="bug-head">
+        <span id="bug-head-title">🐛 Squash the Bug</span>
+        <button id="bug-close" aria-label="Close">✕</button>
+      </div>
+
+      <div id="bug-intro">
+        <p>30 seconds. Bugs will spawn and scurry off if you don't get them fast. Click (or tap) as many as you can before time's up.</p>
+        <button class="print-btn pb-primary" id="bug-start">Start</button>
+      </div>
+
+      <div id="bug-play" hidden>
+        <div id="bug-meta">
+          <span id="bug-score">Score: 0</span>
+          <span id="bug-time">Time: 30s</span>
+        </div>
+        <div id="bug-timer-track"><div id="bug-timer-fill"></div></div>
+        <div id="bug-field"></div>
+      </div>
+
+      <div id="bug-end" hidden>
+        <div id="bug-end-score"></div>
+        <div id="bug-end-msg"></div>
+        <div id="bug-end-actions">
+          <button class="print-btn pb-secondary" id="bug-replay">Play Again</button>
+          <button class="print-btn pb-primary" id="bug-done">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="page">
@@ -265,5 +371,134 @@
     </section>
 
   </div>
+
+  <script>
+    (function () {
+      const GAME_TIME = 30000;
+      const MAX_BUGS = 4;
+      const SPAWN_EVERY = [500, 850];
+      const BUG_LIFESPAN = [1000, 1600];
+
+      const overlay = document.getElementById('bug-overlay');
+      const trigger = document.getElementById('bug-trigger');
+      const closeBtn = document.getElementById('bug-close');
+      const startBtn = document.getElementById('bug-start');
+      const replayBtn = document.getElementById('bug-replay');
+      const doneBtn = document.getElementById('bug-done');
+
+      const introEl = document.getElementById('bug-intro');
+      const playEl = document.getElementById('bug-play');
+      const endEl = document.getElementById('bug-end');
+
+      const scoreEl = document.getElementById('bug-score');
+      const timeEl = document.getElementById('bug-time');
+      const timerFill = document.getElementById('bug-timer-fill');
+      const field = document.getElementById('bug-field');
+      const endScoreEl = document.getElementById('bug-end-score');
+      const endMsgEl = document.getElementById('bug-end-msg');
+
+      let score = 0, activeBugs = 0, startTime = 0, spawnTimeout = null, tickRAF = null, running = false;
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function openGame() {
+        overlay.classList.add('open');
+        introEl.hidden = false;
+        playEl.hidden = true;
+        endEl.hidden = true;
+      }
+      function closeGame() {
+        overlay.classList.remove('open');
+        stopGame();
+      }
+
+      function startGame() {
+        score = 0;
+        activeBugs = 0;
+        field.innerHTML = '';
+        scoreEl.textContent = 'Score: 0';
+        timeEl.textContent = 'Time: 30s';
+        timerFill.style.width = '100%';
+        introEl.hidden = true;
+        endEl.hidden = true;
+        playEl.hidden = false;
+        running = true;
+        startTime = performance.now();
+        scheduleSpawn();
+        tick();
+      }
+
+      function stopGame() {
+        running = false;
+        if (spawnTimeout) clearTimeout(spawnTimeout);
+        if (tickRAF) cancelAnimationFrame(tickRAF);
+        field.innerHTML = '';
+      }
+
+      function scheduleSpawn() {
+        if (!running) return;
+        spawnTimeout = setTimeout(() => {
+          if (running && activeBugs < MAX_BUGS) spawnBug();
+          scheduleSpawn();
+        }, rand(SPAWN_EVERY[0], SPAWN_EVERY[1]));
+      }
+
+      function spawnBug() {
+        const b = document.createElement('button');
+        b.className = 'bug';
+        b.textContent = '🐛';
+        b.style.left = rand(8, 92) + '%';
+        b.style.top = rand(10, 90) + '%';
+        activeBugs++;
+        let squashed = false;
+
+        const life = setTimeout(() => {
+          if (!squashed && b.parentNode) { b.remove(); activeBugs--; }
+        }, rand(BUG_LIFESPAN[0], BUG_LIFESPAN[1]));
+
+        b.addEventListener('click', () => {
+          if (squashed) return;
+          squashed = true;
+          clearTimeout(life);
+          score++;
+          scoreEl.textContent = `Score: ${score}`;
+          b.classList.add('squashed');
+          setTimeout(() => { if (b.parentNode) { b.remove(); activeBugs--; } }, 160);
+        });
+
+        field.appendChild(b);
+      }
+
+      function tick() {
+        const elapsed = performance.now() - startTime;
+        const remaining = Math.max(0, GAME_TIME - elapsed);
+        timerFill.style.width = (remaining / GAME_TIME * 100) + '%';
+        timeEl.textContent = `Time: ${Math.ceil(remaining / 1000)}s`;
+        if (remaining <= 0) { endGame(); return; }
+        tickRAF = requestAnimationFrame(tick);
+      }
+
+      function endGame() {
+        stopGame();
+        playEl.hidden = true;
+        endEl.hidden = false;
+        endScoreEl.textContent = `${score} squashed`;
+        endMsgEl.textContent = score >= 20
+          ? '🏆 Exterminator — nothing survives your review.'
+          : score >= 12
+          ? '🐜 Solid reflexes — most bugs never made it to prod.'
+          : '🐛 A few got away — happens in every sprint.';
+      }
+
+      trigger.addEventListener('click', openGame);
+      closeBtn.addEventListener('click', closeGame);
+      startBtn.addEventListener('click', startGame);
+      replayBtn.addEventListener('click', startGame);
+      doneBtn.addEventListener('click', closeGame);
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeGame();
+      });
+    })();
+  </script>
 </body>
 </html>

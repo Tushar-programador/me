@@ -628,6 +628,100 @@
       color: var(--muted-dim);
       text-transform: uppercase;
     }
+    .footer-egg {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted-dim);
+      transition: color 0.4s var(--ease);
+    }
+    .footer-egg:hover { color: var(--accent); }
+
+    /* ─── INCIDENT RESPONSE GAME ─── */
+    #incident-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(10,10,10,0.82);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease-io);
+    }
+    #incident-overlay.open { opacity: 1; pointer-events: all; }
+    #incident-panel {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      max-width: 560px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+    #incident-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+    #incident-title { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; }
+    #incident-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1rem; line-height: 1;
+      transition: color 0.3s var(--ease);
+    }
+    #incident-close:hover { color: var(--accent); }
+    #incident-intro p { color: var(--muted); line-height: 1.75; margin-bottom: 1.6rem; font-size: 0.95rem; }
+    #incident-meta {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+    #incident-timer-track {
+      height: 3px; background: var(--line); border-radius: 2px; margin-bottom: 1.4rem; overflow: hidden;
+    }
+    #incident-timer-fill {
+      height: 100%; width: 100%; background: var(--accent);
+      transition: width 0.1s linear;
+    }
+    #incident-scenario-title {
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); margin-bottom: 0.9rem;
+    }
+    #incident-log { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+    .log-line {
+      display: block; width: 100%; text-align: left;
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted);
+      background: var(--bg-raised); border: 1px solid var(--line); border-radius: 3px;
+      padding: 0.65rem 0.9rem; cursor: pointer;
+      transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .log-line:hover:not([disabled]) { border-color: var(--accent); color: var(--text); }
+    .log-line.correct { border-color: var(--status); color: var(--text); background: var(--status-soft); }
+    .log-line.wrong { animation: shakeLine 0.4s; }
+    .log-line[disabled] { cursor: default; }
+    @keyframes shakeLine {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+    #incident-feedback { font-size: 0.85rem; color: var(--muted); min-height: 1.4em; line-height: 1.6; }
+    #incident-feedback strong { color: var(--status); }
+    #incident-end-score {
+      font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 0.6rem;
+    }
+    #incident-end-msg { text-align: center; color: var(--muted); margin-bottom: 1.8rem; font-size: 0.9rem; }
+    #incident-end-actions { display: flex; gap: 1rem; justify-content: center; }
 
     /* ─── MOBILE ─── */
     @media (max-width: 860px) {
@@ -691,7 +785,7 @@
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">See My Work</a>
       <a href="#contact" class="btn btn-outline">Get In Touch</a>
-      <a href="resume.html" target="_blank" class="btn-text">Download CV ↓</a>
+      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text">Download CV ↓</a>
     </div>
     <div class="scroll-hint">Scroll</div>
   </section>
@@ -1017,7 +1111,7 @@
         <a class="contact-link" href="https://www.linkedin.com/in/tushar-kalra-developer/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="contact-link" href="tel:+917206405935">+91-72064-05935</a>
       </div>
-      <a href="resume.html" target="_blank" class="btn-text">Download Resume ↓</a>
+      <a href="TUSHAR_KALRA_Resume_2026-08-13.pdf" download="Tushar-Kalra-Resume.pdf" target="_blank" class="btn-text">Download Resume ↓</a>
 
       <div class="open-to-wrap">
         <div class="open-to-label">Open to</div>
@@ -1034,7 +1128,43 @@
   <footer>
     <p>Designed &amp; Built by <strong style="color:var(--accent)">Tushar Kalra</strong></p>
     <p class="footer-sub">Software Engineer &nbsp;·&nbsp; Backend Developer &nbsp;·&nbsp; Node.js Engineer</p>
+    <button id="incident-trigger" class="footer-egg">feeling brave? debug a live incident →</button>
   </footer>
+
+  <!-- INCIDENT RESPONSE GAME -->
+  <div id="incident-overlay">
+    <div id="incident-panel" role="dialog" aria-modal="true" aria-label="Incident Response game">
+      <div id="incident-header">
+        <span id="incident-title">Incident Response</span>
+        <button id="incident-close" aria-label="Close">✕</button>
+      </div>
+
+      <div id="incident-intro">
+        <p>An alert just fired. Read the log, click the line that actually caused the incident before the timer runs out. Six rounds, pulled from a real backend engineer's on-call nightmares.</p>
+        <button id="incident-start" class="btn btn-primary">Start Shift</button>
+      </div>
+
+      <div id="incident-play" hidden>
+        <div id="incident-meta">
+          <span id="incident-round">Round 1 / 6</span>
+          <span id="incident-score">Score: 0</span>
+        </div>
+        <div id="incident-timer-track"><div id="incident-timer-fill"></div></div>
+        <div id="incident-scenario-title"></div>
+        <div id="incident-log"></div>
+        <div id="incident-feedback">&nbsp;</div>
+      </div>
+
+      <div id="incident-end" hidden>
+        <div id="incident-end-score"></div>
+        <div id="incident-end-msg"></div>
+        <div id="incident-end-actions">
+          <button id="incident-replay" class="btn btn-outline">Play Again</button>
+          <button id="incident-done" class="btn btn-primary">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CDN SCRIPTS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -1155,6 +1285,298 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { navToggle.classList.remove('open'); mobileMenu.classList.remove('open'); }
     });
+
+    // ─── INCIDENT RESPONSE GAME ───────────────────────────────────────────────
+    (function () {
+      const SCENARIOS = [
+        {
+          title: 'alert: p99 latency spike on /api/orders',
+          lines: [
+            '10:41:02 INFO  order-svc  received POST /api/orders (user=8841)',
+            '10:41:02 DEBUG order-svc  validating payload against schema',
+            '10:41:03 WARN  order-svc  pg pool: 20/20 connections in use, 340ms wait',
+            '10:41:03 INFO  order-svc  inventory check passed for sku=INV-2291',
+            '10:41:04 INFO  order-svc  order created, id=ORD-99213',
+          ],
+          cause: 2,
+          explain: 'The Postgres connection pool was fully saturated — every request queued behind it. Fix: raise pool size and add a circuit breaker, not touch validation or inventory logic.',
+        },
+        {
+          title: 'alert: memory usage climbing on invoice-worker',
+          lines: [
+            '02:10:11 INFO  invoice-worker  picked up job 5521 from BullMQ',
+            '02:10:12 INFO  invoice-worker  downloaded PDF from S3 (2.1mb)',
+            '02:10:12 DEBUG invoice-worker  registered new textract callback listener',
+            '02:10:44 INFO  invoice-worker  job 5521 completed in 32s',
+            '02:10:44 WARN  invoice-worker  listener count for "textract:done" now 214',
+          ],
+          cause: 2,
+          explain: 'A new listener was registered on every job instead of once — a classic EventEmitter leak. Hundreds of jobs later, memory climbs and old callbacks never get collected.',
+        },
+        {
+          title: 'alert: 500s on POST /webhooks/payment',
+          lines: [
+            '14:02:00 INFO  webhook-svc  signature verified for provider=stripe',
+            '14:02:00 DEBUG webhook-svc  parsing event type=payment.succeeded',
+            '14:02:00 INFO  webhook-svc  updating order status in mongo',
+            "14:02:00 ERROR webhook-svc  TypeError: cannot read properties of undefined (reading 'id')",
+            '14:02:00 INFO  webhook-svc  responded 500 to provider',
+          ],
+          cause: 3,
+          explain: 'The handler assumed `event.data.object.id` always exists without checking the payload shape first — an unguarded property access threw before a response was sent.',
+        },
+        {
+          title: 'alert: duplicate invoices being generated',
+          lines: [
+            '09:15:00 INFO  billing-svc  cron tick: generate-invoices',
+            '09:15:00 DEBUG billing-svc  fetched 340 active subscriptions',
+            '09:15:01 INFO  billing-svc  no idempotency key set on job',
+            '09:15:03 INFO  billing-svc  invoice created for sub=SUB-771',
+            '09:15:03 INFO  billing-svc  invoice created for sub=SUB-771',
+          ],
+          cause: 2,
+          explain: 'The job had no idempotency key, so a retry (from a timeout or redeploy) re-ran the whole batch and created duplicate invoices for the same subscription.',
+        },
+        {
+          title: 'alert: checkout page timing out for 8% of users',
+          lines: [
+            '18:44:10 INFO  api-gateway  proxying GET /api/cart to cart-svc',
+            '18:44:10 DEBUG cart-svc  fetching cart from redis, key=cart:8841',
+            '18:44:10 INFO  cart-svc  cache miss, falling back to mongo',
+            '18:44:11 INFO  cart-svc  N+1: fetching product details for 34 items individually',
+            '18:44:13 INFO  cart-svc  responded 200 in 2840ms',
+          ],
+          cause: 3,
+          explain: 'A classic N+1 — product details were fetched one query per cart item instead of a single batched lookup, so bigger carts got linearly slower.',
+        },
+        {
+          title: 'alert: session drops during traffic spike',
+          lines: [
+            '21:00:00 INFO  auth-svc  issuing JWT for user=4471',
+            '21:00:00 DEBUG auth-svc  refresh token stored in redis, ttl=7d',
+            '21:00:05 WARN  auth-svc  redis EVICTED 1200 keys (maxmemory policy: allkeys-lru)',
+            '21:00:06 INFO  auth-svc  502 from nginx upstream',
+            '21:00:06 INFO  auth-svc  client retried request',
+          ],
+          cause: 2,
+          explain: 'Redis hit its memory limit and started evicting session/refresh-token keys under an LRU policy — logged-in users got silently signed out.',
+        },
+        {
+          title: 'alert: background jobs stuck in "active" forever',
+          lines: [
+            '05:30:00 INFO  worker  processing job 991: send-report-email',
+            '05:30:00 DEBUG worker  rendering pdf template',
+            '05:30:00 INFO  worker  calling sendEmail(), missing await',
+            '05:30:00 INFO  worker  job marked complete',
+            '05:30:01 ERROR worker  UnhandledPromiseRejection: SMTP connection timeout',
+          ],
+          cause: 2,
+          explain: 'A missing `await` on the email send meant the job reported success immediately while the real send failed silently in the background.',
+        },
+        {
+          title: 'alert: intermittent CORS errors reported by frontend',
+          lines: [
+            '11:12:00 INFO  api  received OPTIONS preflight for /api/profile',
+            '11:12:00 DEBUG api  cors middleware mounted after auth middleware',
+            '11:12:00 WARN  api  auth middleware rejected OPTIONS with 401',
+            '11:12:00 INFO  api  browser blocked the actual GET request',
+            '11:12:00 INFO  api  frontend shows generic network error',
+          ],
+          cause: 1,
+          explain: 'CORS middleware was mounted after the auth check, so preflight OPTIONS requests — which carry no auth header — got rejected before CORS headers were ever attached.',
+        },
+        {
+          title: 'alert: disk usage on log volume growing fast',
+          lines: [
+            '00:00:00 INFO  app  log rotation policy: none configured',
+            '00:00:01 DEBUG app  writing request/response bodies to debug log',
+            '00:00:01 INFO  app  debug logging left enabled in production',
+            '00:00:02 INFO  app  disk usage 78% and climbing',
+            '00:00:02 WARN  app  no alert threshold configured for disk usage',
+          ],
+          cause: 2,
+          explain: 'Verbose debug logging (full request/response bodies) was left on in production with no rotation policy — easy to miss, costly to leave running.',
+        },
+        {
+          title: 'alert: search endpoint returns stale results',
+          lines: [
+            '16:20:00 INFO  search-svc  received GET /api/search?q=laptop',
+            '16:20:00 DEBUG search-svc  cache hit for key=search:laptop',
+            '16:20:00 INFO  search-svc  cached result is 6 hours old, ttl=24h',
+            '16:20:00 INFO  search-svc  product catalog updated 10 minutes ago',
+            '16:20:00 INFO  search-svc  responded 200 from cache',
+          ],
+          cause: 2,
+          explain: "The cache TTL (24h) didn't match how often the underlying catalog actually changes — a cache-invalidation gap, not a bug in the query itself.",
+        },
+        {
+          title: 'alert: rate limiter blocking legitimate traffic',
+          lines: [
+            '13:05:00 INFO  gateway  request from ip=203.0.113.4 via CDN',
+            '13:05:00 DEBUG gateway  rate limiter keyed by request IP',
+            '13:05:00 WARN  gateway  CDN forwards all traffic from one edge IP',
+            '13:05:00 INFO  gateway  429 Too Many Requests returned',
+            '13:05:00 INFO  gateway  support tickets rising',
+          ],
+          cause: 2,
+          explain: "The rate limiter keyed on raw request IP, but every request behind the CDN shared one edge IP — it should key on the client IP from X-Forwarded-For instead.",
+        },
+        {
+          title: 'alert: deploy rolled back automatically',
+          lines: [
+            '19:00:00 INFO  ci-cd  new image deployed to 3 replicas',
+            '19:00:05 DEBUG ci-cd  readiness probe hits GET /health',
+            '19:00:05 WARN  ci-cd  /health route requires a valid DB connection',
+            '19:00:06 ERROR ci-cd  readiness probe failing, DB migration still running',
+            '19:00:10 INFO  ci-cd  auto-rollback triggered after 3 failed probes',
+          ],
+          cause: 2,
+          explain: "The health check depended on a DB connection that wasn't ready because a migration was still running — the probe should check app liveness, not full DB readiness, during rollout.",
+        },
+      ];
+
+      const ROUNDS = 6;
+      const ROUND_TIME = 16000;
+
+      const overlay = document.getElementById('incident-overlay');
+      const trigger = document.getElementById('incident-trigger');
+      const closeBtn = document.getElementById('incident-close');
+      const startBtn = document.getElementById('incident-start');
+      const replayBtn = document.getElementById('incident-replay');
+      const doneBtn = document.getElementById('incident-done');
+
+      const introEl = document.getElementById('incident-intro');
+      const playEl = document.getElementById('incident-play');
+      const endEl = document.getElementById('incident-end');
+
+      const roundEl = document.getElementById('incident-round');
+      const scoreEl = document.getElementById('incident-score');
+      const timerFill = document.getElementById('incident-timer-fill');
+      const scenarioTitleEl = document.getElementById('incident-scenario-title');
+      const logEl = document.getElementById('incident-log');
+      const feedbackEl = document.getElementById('incident-feedback');
+      const endScoreEl = document.getElementById('incident-end-score');
+      const endMsgEl = document.getElementById('incident-end-msg');
+
+      let deck = [], round = 0, score = 0, timerStart = 0, timerRAF = null, answered = false;
+
+      function shuffle(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+        }
+        return a;
+      }
+
+      function openGame() {
+        overlay.classList.add('open');
+        introEl.hidden = false;
+        playEl.hidden = true;
+        endEl.hidden = true;
+      }
+      function closeGame() {
+        overlay.classList.remove('open');
+        stopTimer();
+      }
+
+      function startGame() {
+        deck = shuffle(SCENARIOS).slice(0, ROUNDS);
+        round = 0;
+        score = 0;
+        introEl.hidden = true;
+        endEl.hidden = true;
+        playEl.hidden = false;
+        nextRound();
+      }
+
+      function nextRound() {
+        if (round >= deck.length) { endGame(); return; }
+        answered = false;
+        const scenario = deck[round];
+        roundEl.textContent = `Round ${round + 1} / ${deck.length}`;
+        scoreEl.textContent = `Score: ${score}`;
+        scenarioTitleEl.textContent = scenario.title;
+        feedbackEl.innerHTML = '&nbsp;';
+        logEl.innerHTML = '';
+        scenario.lines.forEach((line, i) => {
+          const b = document.createElement('button');
+          b.className = 'log-line';
+          b.textContent = line;
+          b.addEventListener('click', () => answer(i, scenario, b));
+          logEl.appendChild(b);
+        });
+        startTimer(scenario);
+      }
+
+      function startTimer(scenario) {
+        timerStart = performance.now();
+        timerFill.style.width = '100%';
+        function tick(now) {
+          const elapsed = now - timerStart;
+          const pct = Math.max(0, 100 - (elapsed / ROUND_TIME) * 100);
+          timerFill.style.width = pct + '%';
+          if (pct <= 0 && !answered) { answered = true; revealAnswer(scenario); return; }
+          if (!answered) timerRAF = requestAnimationFrame(tick);
+        }
+        timerRAF = requestAnimationFrame(tick);
+      }
+      function stopTimer() { if (timerRAF) cancelAnimationFrame(timerRAF); }
+
+      function answer(i, scenario, btn) {
+        if (answered) return;
+        if (i === scenario.cause) {
+          answered = true;
+          stopTimer();
+          score++;
+          btn.classList.add('correct');
+          Array.prototype.forEach.call(logEl.children, b => { b.disabled = true; });
+          feedbackEl.innerHTML = `<strong>Resolved.</strong> ${scenario.explain}`;
+          setTimeout(() => { round++; nextRound(); }, 2400);
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => btn.classList.remove('wrong'), 400);
+        }
+      }
+
+      function revealAnswer(scenario) {
+        stopTimer();
+        Array.prototype.forEach.call(logEl.children, (b, i) => {
+          b.disabled = true;
+          if (i === scenario.cause) b.classList.add('correct');
+        });
+        feedbackEl.innerHTML = `<strong>Timed out.</strong> ${scenario.explain}`;
+        setTimeout(() => { round++; nextRound(); }, 2600);
+      }
+
+      function endGame() {
+        playEl.hidden = true;
+        endEl.hidden = false;
+        endScoreEl.textContent = `${score} / ${deck.length}`;
+        endMsgEl.textContent = score === deck.length
+          ? 'Certified on-call engineer. Nothing gets past you.'
+          : score >= deck.length * 0.6
+          ? "Solid instincts — you'd survive an on-call rotation."
+          : 'Might want to keep the runbook open for the next shift.';
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (!overlay.classList.contains('open') || playEl.hidden) return;
+        const n = parseInt(e.key, 10);
+        if (!isNaN(n) && n >= 1 && n <= logEl.children.length) logEl.children[n - 1].click();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeGame();
+      });
+
+      trigger.addEventListener('click', openGame);
+      closeBtn.addEventListener('click', closeGame);
+      startBtn.addEventListener('click', startGame);
+      replayBtn.addEventListener('click', startGame);
+      doneBtn.addEventListener('click', closeGame);
+
+      console.log('%c🛠 psst — there\'s a hidden incident-response drill in the footer.', 'color:#d9a441;font-family:monospace;font-size:12px;');
+    })();
   </script>
 </body>
 </html>
