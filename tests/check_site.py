@@ -134,7 +134,7 @@ class AboutExperienceChecks(unittest.TestCase):
         self.assertIn('id="experience"', HTML)
 
     def test_stats_exact(self):
-        stats = re.findall(r'<div class="stat[^"]*"><b>(.*?)</b><span>(.*?)</span></div>', HTML)
+        stats = re.findall(r'<div class="stat[^"]*"><b[^>]*>(.*?)</b><span>(.*?)</span></div>', HTML)
         self.assertEqual(
             stats,
             [("2+", "Years of experience"), ("70+", "Production REST APIs"),
@@ -402,6 +402,18 @@ class TileChecks(unittest.TestCase):
 
     def test_no_external_logo_assets(self):
         self.assertNotIn("<img", HTML)
+
+
+class CountUpChecks(unittest.TestCase):
+    def test_stats_carry_targets(self):
+        got = re.findall(r'<b data-count="(\d+)" data-suffix="([^"]*)">([^<]*)</b>', HTML)
+        self.assertEqual(got, [("2", "+", "2+"), ("70", "+", "70+"), ("70", "%", "70%"), ("60", "%+", "60%+")])
+
+    # Review Focus 2
+    def test_countup_skips_reduced_motion(self):
+        js = re.search(r"\.stat b\[data-count\]'\)\)(.*?)\}\)\(\);", HTML, re.S).group(1)
+        self.assertIn("prefers-reduced-motion", js)
+        self.assertIn("IntersectionObserver", js)
 
 
 if __name__ == "__main__":

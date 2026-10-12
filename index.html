@@ -280,10 +280,10 @@ html:not(.js) .face.back{transform:none}
         <p>I like systems that are boring to operate: automated, observable and easy to recover when something fails.</p>
       </div>
       <div class="stats reveal">
-        <div class="stat"><b>2+</b><span>Years of experience</span></div>
-        <div class="stat"><b>70+</b><span>Production REST APIs</span></div>
-        <div class="stat"><b>70%</b><span>Less manual data entry</span></div>
-        <div class="stat"><b>60%+</b><span>Faster invoice processing</span></div>
+        <div class="stat"><b data-count="2" data-suffix="+">2+</b><span>Years of experience</span></div>
+        <div class="stat"><b data-count="70" data-suffix="+">70+</b><span>Production REST APIs</span></div>
+        <div class="stat"><b data-count="70" data-suffix="%">70%</b><span>Less manual data entry</span></div>
+        <div class="stat"><b data-count="60" data-suffix="%+">60%+</b><span>Faster invoice processing</span></div>
       </div>
     </div>
   </div>
@@ -539,6 +539,22 @@ document.querySelectorAll('.flip').forEach(function(b){
   b.addEventListener('click',function(){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true')});
   b.addEventListener('keydown',function(e){if(e.key==='Escape')b.setAttribute('aria-pressed','false')});
 });
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.stat b[data-count]'));
+  if(!els.length||matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+  function run(el){
+    var to=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'',t0=null;
+    function f(t){
+      if(t0===null)t0=t;
+      var p=Math.min((t-t0)/1200,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(to*e)+suf;
+      if(p<1)requestAnimationFrame(f);
+    }
+    el.textContent='0'+suf;requestAnimationFrame(f);
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){io.unobserve(en.target);run(en.target)}})},{threshold:.6});
+  els.forEach(function(e){io.observe(e)});
+})();
 </script>
 </body>
 </html>
