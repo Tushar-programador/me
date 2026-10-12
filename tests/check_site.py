@@ -222,5 +222,44 @@ class ContactSeoChecks(unittest.TestCase):
             self.assertNotIn(s, HTML)
 
 
+class FinalReviewChecks(unittest.TestCase):
+    def test_pipeline_stacks_before_labels_wrap(self):
+        # at 6 columns "Kubernetes" needs ~82px; below ~860px nodes are too narrow and the word breaks
+        m = re.search(r"@media\(max-width:(\d+)px\)\{\s*\.pipe\{grid-template-columns:1fr", CSS.replace(" ", ""))
+        self.assertIsNotNone(m, "no single-column pipeline media query")
+        self.assertGreaterEqual(int(m.group(1)), 860)
+
+    def test_every_section_has_a_heading(self):
+        for sid, body in re.findall(r'<section id="(\w+)">(.*?)</section>', HTML, re.S):
+            self.assertRegex(body, r"<h[12][ >]", f"section #{sid} has no heading")
+
+    def test_about_does_not_overclaim(self):
+        # resume says Vervebot work "supported" deployment; K8s/Terraform come from projects only
+        self.assertNotIn("I own", HTML)
+
+    def test_reduced_motion_block_disables_animation(self):
+        block = re.search(r"@media\(prefers-reduced-motion:reduce\)\{(.*?)\n\}", CSS.replace(" ", ""), re.S).group(1)
+        self.assertIn("animation:none", block)
+        self.assertIn("transition:none", block)
+
+    def test_wrap_rule_is_on_body(self):
+        self.assertRegex(CSS.replace(" ", ""), r"body\{[^}]*overflow-wrap:anywhere")
+
+    def test_hero_h1_contains_role(self):
+        h1 = re.search(r"<h1>(.*?)</h1>", HTML, re.S).group(1)
+        self.assertIn("Tushar Kalra", h1)
+        self.assertRegex(h1, r'<b class="amb">Backend</b>.*<b class="cy">Cloud</b> Engineer')
+
+    def test_track_bullet_rules_are_scoped(self):
+        for sel in re.findall(r"([^{}]+)\{", CSS):
+            if re.search(r"\.(?:cl|bk)\s+li::before", sel):
+                self.assertIn(".cols", sel, f"unscoped bullet rule: {sel.strip()}")
+
+    def test_reveal_not_hidden_by_other_means(self):
+        flat = CSS.replace(" ", "")
+        self.assertNotIn(".reveal:not(.in)", flat)
+        self.assertIsNone(re.search(r"(?<!html\.js)\.reveal[^{}]*\{[^}]*visibility:hidden", flat))
+
+
 if __name__ == "__main__":
     unittest.main()
