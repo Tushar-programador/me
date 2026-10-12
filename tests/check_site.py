@@ -158,7 +158,7 @@ class SkillsEducationChecks(unittest.TestCase):
         for s in ("Go", "Node.js", "NestJS", "TypeScript", "Socket.IO", "BullMQ", "MongoDB", "PostgreSQL", "Redis",
                   "AWS", "Docker", "Kubernetes", "Helm", "Terraform", "GitHub Actions", "Nginx", "Prometheus",
                   "Grafana", "OpenTelemetry", "CloudWatch", "System Design", "Microservices"):
-            self.assertRegex(HTML, r"<li>%s</li>" % re.escape(s))
+            self.assertRegex(HTML, r"<li>%s</li>|<span>%s</span></li>" % (re.escape(s), re.escape(s)))
 
     def test_education(self):
         self.assertIn('id="education"', HTML)
@@ -387,6 +387,21 @@ class FlipCardChecks(unittest.TestCase):
     def test_reveal_not_on_flip_inner(self):
         # .reveal sets transform; on the rotating element it would cancel the flip
         self.assertNotIn('class="flip-inner reveal"', HTML)
+
+
+class TileChecks(unittest.TestCase):
+    def test_tiles_per_track(self):
+        bk = re.search(r'<div class="track bk reveal">(.*?)</div>\s*<div class="track cl', HTML, re.S).group(1)
+        cl = re.search(r'<div class="track cl reveal">(.*?)</div>\s*</div>\s*<div class="group core', HTML, re.S).group(1)
+        self.assertEqual(len(re.findall(r'<li class="tile">', bk)), 13)
+        self.assertEqual(len(re.findall(r'<li class="tile">', cl)), 23)
+
+    def test_tile_marks_are_decorative(self):
+        for mark in re.findall(r'<li class="tile">(<b[^>]*>)', HTML):
+            self.assertEqual(mark, '<b aria-hidden="true">')
+
+    def test_no_external_logo_assets(self):
+        self.assertNotIn("<img", HTML)
 
 
 if __name__ == "__main__":

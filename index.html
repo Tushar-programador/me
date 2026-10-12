@@ -191,6 +191,14 @@ html.js .reveal.in{opacity:1;transform:none}
 html:not(.js) .flip-inner{min-height:0;transform:none}
 html:not(.js) .face{position:static;backface-visibility:visible;margin-bottom:12px}
 html:not(.js) .face.back{transform:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;list-style:none;padding:0}
+.tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;text-align:center;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);font:500 .74rem var(--mono);color:var(--text);transition:transform .15s,border-color .15s}
+.tile:hover{transform:translateY(-2px)}
+.tile b{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;font:700 .8rem var(--mono)}
+.track.bk .tile b{color:var(--violet);background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.35)}
+.track.cl .tile b{color:var(--cyan);background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35)}
+.track.bk .tile:hover{border-color:rgba(168,85,247,.5)}
+.track.cl .tile:hover{border-color:rgba(34,211,238,.5)}
 .stat b{color:var(--cyan)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){.stat b{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}}
 </style>
@@ -362,20 +370,20 @@ html:not(.js) .face.back{transform:none}
       <div class="track bk reveal">
         <h3>Backend</h3>
         <div class="group"><h4>Languages &amp; frameworks</h4>
-          <ul class="chips"><li>Go</li><li>Node.js</li><li>Express.js</li><li>NestJS</li><li>TypeScript</li><li>REST APIs</li><li>Socket.IO</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">Go</b><span>Go</span></li><li class="tile"><b aria-hidden="true">N</b><span>Node.js</span></li><li class="tile"><b aria-hidden="true">Ex</b><span>Express.js</span></li><li class="tile"><b aria-hidden="true">Ns</b><span>NestJS</span></li><li class="tile"><b aria-hidden="true">TS</b><span>TypeScript</span></li><li class="tile"><b aria-hidden="true">R</b><span>REST APIs</span></li><li class="tile"><b aria-hidden="true">IO</b><span>Socket.IO</span></li></ul></div>
         <div class="group"><h4>Auth &amp; async</h4>
-          <ul class="chips"><li>JWT</li><li>OAuth</li><li>BullMQ</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">JW</b><span>JWT</span></li><li class="tile"><b aria-hidden="true">OA</b><span>OAuth</span></li><li class="tile"><b aria-hidden="true">Bq</b><span>BullMQ</span></li></ul></div>
         <div class="group"><h4>Databases</h4>
-          <ul class="chips"><li>MongoDB</li><li>PostgreSQL</li><li>Redis</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">Mo</b><span>MongoDB</span></li><li class="tile"><b aria-hidden="true">Pg</b><span>PostgreSQL</span></li><li class="tile"><b aria-hidden="true">Re</b><span>Redis</span></li></ul></div>
       </div>
       <div class="track cl reveal">
         <h3>Cloud &amp; DevOps</h3>
         <div class="group"><h4>AWS</h4>
-          <ul class="chips"><li>AWS</li><li>EC2</li><li>S3</li><li>IAM</li><li>VPC</li><li>RDS</li><li>ECR</li><li>ALB</li><li>Route 53</li><li>CloudWatch</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">AWS</b><span>AWS</span></li><li class="tile"><b aria-hidden="true">EC2</b><span>EC2</span></li><li class="tile"><b aria-hidden="true">S3</b><span>S3</span></li><li class="tile"><b aria-hidden="true">IAM</b><span>IAM</span></li><li class="tile"><b aria-hidden="true">VPC</b><span>VPC</span></li><li class="tile"><b aria-hidden="true">RDS</b><span>RDS</span></li><li class="tile"><b aria-hidden="true">ECR</b><span>ECR</span></li><li class="tile"><b aria-hidden="true">ALB</b><span>ALB</span></li><li class="tile"><b aria-hidden="true">R53</b><span>Route 53</span></li><li class="tile"><b aria-hidden="true">CW</b><span>CloudWatch</span></li></ul></div>
         <div class="group"><h4>Containers &amp; IaC</h4>
-          <ul class="chips"><li>Docker</li><li>Docker Compose</li><li>Kubernetes</li><li>Helm</li><li>Terraform</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">Dk</b><span>Docker</span></li><li class="tile"><b aria-hidden="true">DC</b><span>Docker Compose</span></li><li class="tile"><b aria-hidden="true">K8</b><span>Kubernetes</span></li><li class="tile"><b aria-hidden="true">He</b><span>Helm</span></li><li class="tile"><b aria-hidden="true">Tf</b><span>Terraform</span></li></ul></div>
         <div class="group"><h4>Delivery &amp; observability</h4>
-          <ul class="chips"><li>GitHub Actions</li><li>CI/CD</li><li>Nginx</li><li>Linux</li><li>Bash</li><li>Prometheus</li><li>Grafana</li><li>OpenTelemetry</li></ul></div>
+          <ul class="tiles"><li class="tile"><b aria-hidden="true">GA</b><span>GitHub Actions</span></li><li class="tile"><b aria-hidden="true">CI</b><span>CI/CD</span></li><li class="tile"><b aria-hidden="true">Nx</b><span>Nginx</span></li><li class="tile"><b aria-hidden="true">Lx</b><span>Linux</span></li><li class="tile"><b aria-hidden="true">$_</b><span>Bash</span></li><li class="tile"><b aria-hidden="true">Pm</b><span>Prometheus</span></li><li class="tile"><b aria-hidden="true">Gf</b><span>Grafana</span></li><li class="tile"><b aria-hidden="true">OT</b><span>OpenTelemetry</span></li></ul></div>
       </div>
     </div>
     <div class="group core reveal"><h4>Core concepts</h4>
