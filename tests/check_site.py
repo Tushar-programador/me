@@ -166,5 +166,33 @@ class SkillsEducationChecks(unittest.TestCase):
         self.assertIn("2022 – 2025", HTML)
 
 
+class ProjectChecks(unittest.TestCase):
+    def test_five_projects_in_order(self):
+        names = re.findall(r'<article class="proj[^"]*">.*?<h3>(.*?)</h3>', HTML, re.S)
+        self.assertEqual(
+            [re.sub(r"<.*?>", "", n).strip() for n in names],
+            ["Production Cloud Deployment &amp; CI/CD Platform", "Production Reliability Platform",
+             "ICMS", "Relook", "Outdraw"],
+        )
+
+    def test_personal_projects_tagged_and_linked(self):
+        self.assertEqual(HTML.count("Personal project"), 2)
+        self.assertIn("https://github.com/Tushar-programador/relook", P.hrefs)
+        self.assertIn("https://github.com/Tushar-programador/outdraw", P.hrefs)
+
+    def test_icms_has_no_percentage(self):
+        icms = re.search(r'<article class="proj[^"]*">(?:(?!</article>).)*?<h3>ICMS</h3>.*?</article>', HTML, re.S).group(0)
+        self.assertNotIn("%", icms)
+
+    def test_track_colour_bullets_do_not_leak_into_project_cards(self):
+        # .cl/.bk bullet colouring must stay scoped to the experience columns (.cols)
+        self.assertIsNone(re.search(r"(^|\n)\.(?:cl|bk) li::before", CSS))
+
+    def test_reliability_platform_mentions_go_and_k8s(self):
+        card = re.search(r"<h3>Production Reliability Platform</h3>.*?</article>", HTML, re.S).group(0)
+        for s in ("Go", "Kubernetes", "Terraform", "OpenTelemetry"):
+            self.assertIn(s, card)
+
+
 if __name__ == "__main__":
     unittest.main()
