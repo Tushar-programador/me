@@ -416,5 +416,37 @@ class CountUpChecks(unittest.TestCase):
         self.assertIn("IntersectionObserver", js)
 
 
+class ContactFooterChecks(unittest.TestCase):
+    def test_form_fields_labelled_and_local(self):
+        form = re.search(r'<form class="cform reveal" id="cform"[^>]*>(.*?)</form>', HTML, re.S)
+        self.assertIsNotNone(form)
+        self.assertNotIn("action=", re.search(r"<form[^>]*>", HTML).group(0))
+        for label, tag in (("Name", "input"), ("Email", "input"), ("Subject", "input"), ("Message", "textarea")):
+            self.assertRegex(form.group(1), r"<label>%s<%s [^>]*required" % (label, tag))
+        self.assertIn('type="email"', form.group(1))
+
+    # Review Focus 1
+    def test_form_hidden_without_js(self):
+        self.assertIn("html:not(.js).cform{display:none", CSS.replace(" ", ""))
+        self.assertIn("mailto:tusharkalra307@gmail.com", HTML)  # visible fallback link stays
+
+    # Review Focus 5
+    def test_form_mailto_encoding_and_limit(self):
+        js = re.search(r"getElementById\('cform'\)(.*?)\}\)\(\);", HTML, re.S).group(1)
+        self.assertIn("mailto:tusharkalra307@gmail.com?subject=", js)
+        self.assertEqual(js.count("encodeURIComponent"), 2)
+        self.assertIn("preventDefault", js)
+        self.assertIn('maxlength="1500"', HTML)
+
+    def test_footer_content(self):
+        foot = re.search(r'<footer class="foot">(.*?)</footer>', HTML, re.S).group(1)
+        for s in ("Tushar Kalra", "Backend &amp; Cloud Engineer", "Open to work", "© 2026 Tushar Kalra",
+                  'href="#hero"', "https://github.com/Tushar-programador",
+                  "https://www.linkedin.com/in/tushar-kalra-developer/", "mailto:tusharkalra307@gmail.com", "tel:+917206405935"):
+            self.assertIn(s, foot)
+        for sid in ("about", "whatido", "experience", "skills", "projects", "contact"):
+            self.assertIn('href="#%s"' % sid, foot)
+
+
 if __name__ == "__main__":
     unittest.main()
