@@ -53,6 +53,11 @@ html.js .reveal.in{opacity:1;transform:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html.js .reveal{opacity:1;transform:none}
   .pipe::after{display:none}
+  .flip-inner,.flip[aria-pressed=true] .flip-inner{transform:none!important}
+  .face{backface-visibility:visible}
+  .face.back{transform:none;opacity:0}
+  .flip[aria-pressed=true] .face.front{opacity:0}
+  .flip[aria-pressed=true] .face.back{opacity:1}
 }
 #hero{padding-top:clamp(48px,8vw,112px)}
 #hero h1{font-size:clamp(2.6rem,8vw,5.5rem);font-weight:700}
@@ -166,6 +171,26 @@ html.js .reveal.in{opacity:1;transform:none}
 .icon-link{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;color:var(--muted);transition:color .15s,background .15s}
 .icon-link:hover{color:var(--text);background:var(--bg-2)}
 .icon-link svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.flip{display:block;width:100%;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer;perspective:1000px}
+.flip-inner{position:relative;display:block;min-height:270px;transition:transform .7s;transform-style:preserve-3d}
+.flip[aria-pressed=true] .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--radius);background:var(--bg-2);border:1px solid var(--line);border-top:3px solid var(--cyan);backface-visibility:hidden;-webkit-backface-visibility:hidden;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.flip.bk .face{border-top-color:var(--violet)}
+.face.back{transform:rotateY(180deg);justify-content:space-between}
+.flip:hover .face{box-shadow:0 0 28px rgba(34,211,238,.18)}
+.flip.bk:hover .face{box-shadow:0 0 28px rgba(168,85,247,.22)}
+.flip .ico{margin:0 0 6px;color:var(--cyan)}
+.flip.bk .ico{color:var(--violet)}
+.f-title{font-size:1.2rem;font-weight:600;line-height:1.2}
+.f-sub{font:500 .8rem var(--mono);color:var(--muted)}
+.f-hint{margin-top:auto;font:500 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.f-desc{color:var(--muted);font-size:.95rem}
+.f-tags{display:flex;flex-wrap:wrap;gap:6px}
+.f-tags span{font:500 .72rem var(--mono);padding:3px 8px;border:1px solid var(--line);border-radius:5px}
+html:not(.js) .flip-inner{min-height:0;transform:none}
+html:not(.js) .face{position:static;backface-visibility:visible;margin-bottom:12px}
+html:not(.js) .face.back{transform:none}
 .stat b{color:var(--cyan)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){.stat b{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}}
 </style>
@@ -252,6 +277,45 @@ html.js .reveal.in{opacity:1;transform:none}
         <div class="stat"><b>70%</b><span>Less manual data entry</span></div>
         <div class="stat"><b>60%+</b><span>Faster invoice processing</span></div>
       </div>
+    </div>
+  </div>
+</section>
+<section id="whatido">
+  <div class="wrap">
+    <p class="eyebrow reveal">What I do</p>
+    <h2 class="reveal">From API to production.</h2>
+    <div class="flips">
+
+      <button class="flip bk reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></svg></span><span class="f-title">Backend APIs</span><span class="f-sub">Node.js · Go · REST</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Developed and maintained 70+ REST APIs for inventory, invoicing, authentication, pricing and reporting, with JWT and OAuth, on Express and NestJS.</span><span class="f-tags"><span>Node.js</span><span>Go</span><span>Express</span><span>NestJS</span><span>JWT</span></span></span>
+      </span></button>
+
+      <button class="flip bk reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span><span class="f-title">Async &amp; data systems</span><span class="f-sub">Redis · BullMQ · SQL/NoSQL</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Background processing with Redis and BullMQ, query optimisation across MongoDB and PostgreSQL, and Redis caching to keep production workloads fast and reliable.</span><span class="f-tags"><span>Redis</span><span>BullMQ</span><span>MongoDB</span><span>PostgreSQL</span></span></span>
+      </span></button>
+
+      <button class="flip cl reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 18a4 4 0 0 0 0-8 6 6 0 0 0-11.5-1A5 5 0 0 0 6 18z"/></svg></span><span class="f-title">Cloud on AWS</span><span class="f-sub">EC2 · S3 · RDS · ALB</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Infrastructure on AWS (VPC, IAM, EC2, RDS, S3, ECR, ALB) provisioned with Terraform, plus S3 and Textract in production invoice workflows.</span><span class="f-tags"><span>AWS</span><span>Terraform</span><span>Textract</span></span></span>
+      </span></button>
+
+      <button class="flip cl reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span><span class="f-title">CI/CD automation</span><span class="f-sub">GitHub Actions</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Pipelines that test, build and deploy automatically with GitHub Actions, so releases are repeatable instead of manual.</span><span class="f-tags"><span>GitHub Actions</span><span>Docker</span><span>Nginx</span><span>PM2</span></span></span>
+      </span></button>
+
+      <button class="flip cl reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 21 7 21 17 12 22 3 17 3 7"/><circle cx="12" cy="12" r="3"/></svg></span><span class="f-title">Containers &amp; Kubernetes</span><span class="f-sub">Docker · Helm · HPA</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Dockerised services with Compose, deployed on Kubernetes with Deployments, Services, Ingress, secrets, health checks, rolling updates and HPA.</span><span class="f-tags"><span>Docker</span><span>Kubernetes</span><span>Helm</span></span></span>
+      </span></button>
+
+      <button class="flip cl reveal" type="button" aria-pressed="false"><span class="flip-inner">
+        <span class="face front"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="f-title">Observability &amp; reliability</span><span class="f-sub">Prometheus · Grafana</span><span class="f-hint">Tap to flip</span></span>
+        <span class="face back"><span class="f-desc">Metrics, dashboards and alerting with Prometheus, Grafana, OpenTelemetry and CloudWatch, backed by failure and recovery testing.</span><span class="f-tags"><span>Prometheus</span><span>Grafana</span><span>OpenTelemetry</span></span></span>
+      </span></button>
+
     </div>
   </div>
 </section>
@@ -463,6 +527,10 @@ document.addEventListener('keydown',function(e){
   document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
   size();start();
 })();
+document.querySelectorAll('.flip').forEach(function(b){
+  b.addEventListener('click',function(){b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true')});
+  b.addEventListener('keydown',function(e){if(e.key==='Escape')b.setAttribute('aria-pressed','false')});
+});
 </script>
 </body>
 </html>

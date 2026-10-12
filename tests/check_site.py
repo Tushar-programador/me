@@ -347,5 +347,47 @@ class HeroNavChecks(unittest.TestCase):
         self.assertIn("animation:flow", flat)
 
 
+class FlipCardChecks(unittest.TestCase):
+    CARDS = re.findall(r'<button class="flip (?:bk|cl) reveal" type="button" aria-pressed="false">(.*?)</button>', HTML, re.S)
+
+    def test_section_present_before_experience(self):
+        self.assertIn('<section id="whatido">', HTML)
+        self.assertLess(HTML.index('id="about"'), HTML.index('id="whatido"'))
+        self.assertLess(HTML.index('id="whatido"'), HTML.index('id="experience"'))
+
+    # Review Focus 3
+    def test_flip_cards_are_buttons(self):
+        self.assertEqual(len(self.CARDS), 6)
+        titles = [re.search(r'<span class="f-title">(.*?)</span>', c).group(1) for c in self.CARDS]
+        self.assertEqual(titles, ["Backend APIs", "Async &amp; data systems", "Cloud on AWS",
+                                  "CI/CD automation", "Containers &amp; Kubernetes", "Observability &amp; reliability"])
+        for c in self.CARDS:
+            self.assertIn('<span class="face front">', c)
+            self.assertIn('<span class="face back">', c)
+            self.assertGreater(len(re.search(r'<span class="f-desc">(.*?)</span>', c, re.S).group(1)), 60)
+
+    # Review Focus 3
+    def test_flip_js_toggles_and_escape(self):
+        js = re.search(r"querySelectorAll\('\.flip'\)(.*?)\}\);\s*\}\);", HTML, re.S).group(1)
+        self.assertIn("aria-pressed", js)
+        self.assertIn("Escape", js)
+
+    # Review Focus 1
+    def test_flip_cards_readable_without_js(self):
+        flat = CSS.replace(" ", "")
+        self.assertIn("html:not(.js).face{position:static", flat)
+        self.assertIn("html:not(.js).flip-inner{", flat)
+
+    # Review Focus 2
+    def test_flip_reduced_motion_is_instant_swap(self):
+        block = re.search(r"@media\(prefers-reduced-motion:reduce\)\{(.*?)\n\}", CSS.replace(" ", ""), re.S).group(1)
+        self.assertIn(".flip-inner{transform:none", block)
+        self.assertIn(".flip[aria-pressed=true].face.front{opacity:0", block)
+
+    def test_reveal_not_on_flip_inner(self):
+        # .reveal sets transform; on the rotating element it would cancel the flip
+        self.assertNotIn('class="flip-inner reveal"', HTML)
+
+
 if __name__ == "__main__":
     unittest.main()
