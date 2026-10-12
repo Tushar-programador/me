@@ -104,5 +104,29 @@ class BaseChecks(unittest.TestCase):
         self.assertIn("overflow-wrap:anywhere", CSS.replace(" ", ""))
 
 
+class HeroChecks(unittest.TestCase):
+    def test_hero_headline(self):
+        self.assertIn('id="hero"', HTML)
+        self.assertIn("Backend", HTML)
+        self.assertRegex(HTML, r"<h1>\s*Tushar Kalra")
+        self.assertIn("Cloud</b> Engineer", HTML)
+
+    # Review Focus 4
+    def test_pipeline_nodes_focusable(self):
+        nodes = re.findall(r'<li class="node" tabindex="0">(.*?)</li>', HTML, re.S)
+        self.assertEqual(len(nodes), 6)
+        for n in nodes:
+            tip = re.search(r'<span class="tip">(.*?)</span>', n, re.S)
+            self.assertTrue(tip and len(tip.group(1).strip()) > 10)
+
+    def test_pipeline_stages_in_order(self):
+        labels = re.findall(r'<span class="n-label">(.*?)</span>', HTML)
+        self.assertEqual(labels, ["Code", "CI/CD", "Docker", "Kubernetes", "AWS", "Observe"])
+
+    def test_reduced_motion_hides_packet(self):
+        block = re.search(r"@media\(prefers-reduced-motion:reduce\)\{(.*?)\n\}", CSS.replace(" ", ""), re.S)
+        self.assertIn(".pipe::after{display:none", block.group(1))
+
+
 if __name__ == "__main__":
     unittest.main()

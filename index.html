@@ -49,6 +49,37 @@ html.js .reveal.in{opacity:1;transform:none}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html.js .reveal{opacity:1;transform:none}
+  .pipe::after{display:none}
+}
+#hero{padding-top:clamp(48px,8vw,112px)}
+#hero h1{font-size:clamp(2.6rem,8vw,5.5rem);font-weight:700}
+#hero .role{display:block;margin-top:10px;font-size:clamp(1.3rem,3.6vw,2.2rem);font-weight:500}
+.amb{color:var(--amber);font-weight:inherit}
+.cy{color:var(--cyan);font-weight:inherit}
+.lede{max-width:62ch;color:var(--muted);font-size:clamp(1.02rem,2vw,1.2rem);margin:24px 0 32px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.pipe{list-style:none;padding:0;margin-top:clamp(48px,8vw,88px);display:grid;grid-template-columns:repeat(6,1fr);gap:14px;position:relative}
+.pipe::before{content:"";position:absolute;left:6%;right:6%;top:35px;height:2px;background:linear-gradient(90deg,var(--amber),var(--cyan));opacity:.55}
+.pipe::after{content:"";position:absolute;top:30px;left:6%;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 14px 4px var(--cyan);z-index:2;animation:flow 6s linear infinite}
+@keyframes flow{from{left:6%}to{left:calc(94% - 12px)}}
+.node{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 10px 14px;text-align:center;transition:border-color .2s,transform .2s}
+.node:hover,.node:focus{border-color:var(--cyan);transform:translateY(-3px)}
+.ico{width:38px;height:38px;margin:0 auto 10px;display:grid;place-items:center;border-radius:50%;background:var(--bg);border:1px solid var(--line);color:var(--cyan)}
+.node:first-child .ico{color:var(--amber)}
+.ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.n-label{display:block;font:500 .85rem var(--mono)}
+.n-sub{display:block;color:var(--muted);font-size:.74rem;margin-top:2px}
+.tip{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);width:210px;background:var(--text);color:var(--bg);font-size:.8rem;line-height:1.4;padding:9px 12px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:5;text-align:left}
+.node:first-child .tip{left:0;transform:none}
+.node:last-child .tip{left:auto;right:0;transform:none}
+.node:hover .tip,.node:focus .tip{opacity:1}
+@media(max-width:720px){
+  .pipe{grid-template-columns:1fr;gap:10px}
+  .pipe::before,.pipe::after{display:none}
+  .node{display:grid;grid-template-columns:38px 1fr;column-gap:14px;text-align:left;align-items:center;padding:12px 14px}
+  .node:hover,.node:focus{transform:none}
+  .ico{margin:0;grid-row:span 3}
+  .tip{position:static;transform:none;width:auto;opacity:1;background:none;color:var(--muted);padding:0;grid-column:2;font-size:.82rem}
 }
 /* @css-end */
 </style>
@@ -69,7 +100,52 @@ html.js .reveal.in{opacity:1;transform:none}
   </nav>
 </header>
 <main id="main">
-<!--@hero-->
+<section id="hero">
+  <div class="wrap">
+    <p class="eyebrow">Software Engineer · Vervebot.io · Gurugram, India</p>
+    <h1>
+      Tushar Kalra
+      <span class="role"><b class="amb">Backend</b> &amp; <b class="cy">Cloud</b> Engineer</span>
+    </h1>
+    <p class="lede">I build production APIs in Go and Node.js, then ship and run them on AWS, Docker and Kubernetes, with CI/CD, Terraform and monitoring.</p>
+    <div class="cta">
+      <a class="btn" href="#projects">View projects</a>
+      <a class="btn ghost" href="#contact">Contact me</a>
+    </div>
+    <ol class="pipe" aria-label="Delivery pipeline from code to monitoring">
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="8 6 2 12 8 18"/><polyline points="16 6 22 12 16 18"/></svg></span>
+        <span class="n-label">Code</span><span class="n-sub">Go · Node.js</span>
+        <span class="tip">Go and Node.js services, including 70+ production REST APIs.</span>
+      </li>
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16"/></svg></span>
+        <span class="n-label">CI/CD</span><span class="n-sub">GitHub Actions</span>
+        <span class="tip">GitHub Actions pipelines that build, test and deploy automatically.</span>
+      </li>
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
+        <span class="n-label">Docker</span><span class="n-sub">Compose</span>
+        <span class="tip">Containerised services with Docker and Docker Compose for consistent environments.</span>
+      </li>
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 21 7 21 17 12 22 3 17 3 7"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <span class="n-label">Kubernetes</span><span class="n-sub">Helm · HPA</span>
+        <span class="tip">Deployments, Services, Ingress, health checks, rolling updates and HPA.</span>
+      </li>
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 18a4 4 0 0 0 0-8 6 6 0 0 0-11.5-1A5 5 0 0 0 6 18z"/></svg></span>
+        <span class="n-label">AWS</span><span class="n-sub">Terraform</span>
+        <span class="tip">Terraform-provisioned VPC, IAM, ALB, EC2, RDS, S3 and ECR.</span>
+      </li>
+      <li class="node" tabindex="0">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
+        <span class="n-label">Observe</span><span class="n-sub">Prometheus · Grafana</span>
+        <span class="tip">Prometheus, Grafana, OpenTelemetry and CloudWatch for metrics and alerting.</span>
+      </li>
+    </ol>
+  </div>
+</section>
 <!--@about-->
 <!--@experience-->
 <!--@skills-->
@@ -87,6 +163,9 @@ html.js .reveal.in{opacity:1;transform:none}
   },{threshold:.12});
   els.forEach(function(e){io.observe(e)});
 })();
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.activeElement&&document.activeElement.classList.contains('node')){document.activeElement.blur()}
+});
 // @js-end
 </script>
 </body>
