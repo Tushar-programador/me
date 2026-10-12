@@ -34,7 +34,7 @@ a{color:inherit}
 .nav ul{list-style:none;padding:0;display:flex;gap:22px;margin-left:auto}
 .nav ul a{font:500 .78rem var(--mono);color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:.08em}
 .nav ul a:hover{color:var(--text)}
-@media(max-width:720px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media(max-width:720px){.nav ul{display:none}.nav-icons{margin-left:auto}}
 .btn{display:inline-block;background:linear-gradient(90deg,var(--violet-2),var(--cyan));color:var(--bg);font:700 .9rem var(--sans);padding:12px 22px;border-radius:10px;text-decoration:none;border:1px solid transparent;transition:transform .15s,box-shadow .15s}
 .btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(34,211,238,.3)}
 .btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
@@ -61,10 +61,10 @@ html.js .reveal.in{opacity:1;transform:none}
 .cy{color:var(--cyan);font-weight:inherit}
 .lede{max-width:62ch;color:var(--muted);font-size:clamp(1.02rem,2vw,1.2rem);margin:24px 0 32px}
 .cta{display:flex;flex-wrap:wrap;gap:12px}
-.pipe{list-style:none;padding:0;margin-top:clamp(48px,8vw,88px);display:grid;grid-template-columns:repeat(6,1fr);gap:14px;position:relative}
+.pipe{list-style:none;padding:0;margin-top:clamp(48px,8vw,88px);display:grid;grid-template-columns:repeat(6,1fr);gap:14px;position:relative;container-type:inline-size}
 .pipe::before{content:"";position:absolute;left:6%;right:6%;top:35px;height:2px;background:linear-gradient(90deg,var(--violet),var(--cyan));opacity:.55}
 .pipe::after{content:"";position:absolute;top:30px;left:6%;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 14px 4px var(--cyan);z-index:2;animation:flow 6s linear infinite}
-@keyframes flow{from{left:6%}to{left:calc(94% - 12px)}}
+@keyframes flow{from{transform:translateX(0)}to{transform:translateX(calc(88cqw - 12px))}}
 .node{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);padding:16px 10px 14px;text-align:center;transition:border-color .2s,transform .2s}
 .node:hover,.node:focus{border-color:var(--cyan);transform:translateY(-3px)}
 .ico{width:38px;height:38px;margin:0 auto 10px;display:grid;place-items:center;border-radius:50%;background:var(--bg);border:1px solid var(--line);color:var(--cyan)}
@@ -158,6 +158,14 @@ html.js .reveal.in{opacity:1;transform:none}
 .proj.bk{border-top-color:var(--line)}
 .proj::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--cyan),#6366f1)}
 .proj.bk::before{background:linear-gradient(90deg,var(--violet),#ec4899)}
+#hero .role{font-family:var(--mono)}
+.prompt{color:var(--violet);margin-right:.2ch}
+.cursor{display:inline-block;width:.5ch;height:1em;background:var(--cyan);margin-left:6px;vertical-align:-.12em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.nav-icons{display:flex;gap:4px}
+.icon-link{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;color:var(--muted);transition:color .15s,background .15s}
+.icon-link:hover{color:var(--text);background:var(--bg-2)}
+.icon-link svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .stat b{color:var(--cyan)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){.stat b{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}}
 </style>
@@ -175,6 +183,10 @@ html.js .reveal.in{opacity:1;transform:none}
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="nav-icons">
+      <a class="icon-link" href="https://github.com/Tushar-programador" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+      <a class="icon-link" href="https://www.linkedin.com/in/tushar-kalra-developer/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+    </div>
     <a class="btn sm" href="Tushar_Kalra_Resume.pdf" download>Resume ↓</a>
   </nav>
 </header>
@@ -184,7 +196,7 @@ html.js .reveal.in{opacity:1;transform:none}
     <p class="eyebrow">Software Engineer · Vervebot.io · Gurugram, India</p>
     <h1>
       Tushar Kalra
-      <span class="role"><b class="be">Backend</b> &amp; <b class="cy">Cloud</b> Engineer</span>
+      <span class="role"><span class="prompt" aria-hidden="true">&gt;_</span> <b class="be">Backend</b> &amp; <b class="cy">Cloud</b> Engineer<span class="cursor" aria-hidden="true"></span></span>
     </h1>
     <p class="lede">I build production APIs in Go and Node.js, then ship and run them on AWS, Docker and Kubernetes, with CI/CD, Terraform and monitoring.</p>
     <div class="cta">

@@ -326,5 +326,26 @@ class ThemeChecks(unittest.TestCase):
         self.assertGreaterEqual(_ratio(_token("cyan"), surface), 4.5)
 
 
+class HeroNavChecks(unittest.TestCase):
+    def test_terminal_prompt_and_cursor(self):
+        role = re.search(r'<span class="role">(.*?)</span>\s*</h1>', HTML, re.S).group(1)
+        self.assertIn('<span class="prompt" aria-hidden="true">&gt;_</span>', role)
+        self.assertIn('<span class="cursor" aria-hidden="true"></span>', role)
+
+    def test_nav_icon_links(self):
+        icons = re.findall(r'<a class="icon-link" href="([^"]+)" target="_blank" rel="noopener noreferrer" aria-label="([^"]+)">', HTML)
+        self.assertEqual(icons, [("https://github.com/Tushar-programador", "GitHub"),
+                                 ("https://www.linkedin.com/in/tushar-kalra-developer/", "LinkedIn")])
+
+    def test_packet_dot_animates_transform_not_left(self):
+        flat = CSS.replace(" ", "")
+        block = re.search(r"@keyframesflow\{(.*?)\}\}", flat, re.S).group(1)
+        self.assertIn("transform", block)
+        self.assertNotIn("left", block)
+        self.assertIn("88cqw", block)  # travel distance = 88% of the pipe (container-type on .pipe)
+        self.assertIn("container-type:inline-size", flat)
+        self.assertIn("animation:flow", flat)
+
+
 if __name__ == "__main__":
     unittest.main()
