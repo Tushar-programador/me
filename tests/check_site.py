@@ -128,5 +128,26 @@ class HeroChecks(unittest.TestCase):
         self.assertIn(".pipe::after{display:none", block.group(1))
 
 
+class AboutExperienceChecks(unittest.TestCase):
+    def test_sections_exist(self):
+        self.assertIn('id="about"', HTML)
+        self.assertIn('id="experience"', HTML)
+
+    def test_stats_exact(self):
+        stats = re.findall(r'<div class="stat[^"]*"><b>(.*?)</b><span>(.*?)</span></div>', HTML)
+        self.assertEqual(
+            stats,
+            [("2+", "Years of experience"), ("70+", "Production REST APIs"),
+             ("70%", "Less manual data entry"), ("60%+", "Faster invoice processing")],
+        )
+
+    def test_experience_facts(self):
+        for s in ("Vervebot.io", "07/2024", "Present", "GitHub Actions", "Nginx", "PM2", "BullMQ", "Textract"):
+            self.assertIn(s, HTML)
+
+    def test_experience_has_two_tracks(self):
+        self.assertEqual(len(re.findall(r'<div class="(?:cl|bk)">', HTML)), 2)
+
+
 if __name__ == "__main__":
     unittest.main()
