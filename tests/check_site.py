@@ -248,7 +248,7 @@ class FinalReviewChecks(unittest.TestCase):
     def test_hero_h1_contains_role(self):
         h1 = re.search(r"<h1>(.*?)</h1>", HTML, re.S).group(1)
         self.assertIn("Tushar Kalra", h1)
-        self.assertRegex(h1, r'<b class="amb">Backend</b>.*<b class="cy">Cloud</b> Engineer')
+        self.assertRegex(h1, r'<b class="be">Backend</b>.*<b class="cy">Cloud</b> Engineer')
 
     def test_track_bullet_rules_are_scoped(self):
         for sel in re.findall(r"([^{}]+)\{", CSS):
@@ -259,6 +259,71 @@ class FinalReviewChecks(unittest.TestCase):
         flat = CSS.replace(" ", "")
         self.assertNotIn(".reveal:not(.in)", flat)
         self.assertIsNone(re.search(r"(?<!html\.js)\.reveal[^{}]*\{[^}]*visibility:hidden", flat))
+
+
+def _lum(hexc):
+    h = hexc.lstrip("#")
+    r, g, b = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    f = lambda c: c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+
+
+def _ratio(a, b):
+    hi, lo = sorted((_lum(a), _lum(b)), reverse=True)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def _blend(bg, white_alpha):
+    h = bg.lstrip("#")
+    c = [int(h[i:i + 2], 16) for i in (0, 2, 4)]
+    return "#%02x%02x%02x" % tuple(round(x * (1 - white_alpha) + 255 * white_alpha) for x in c)
+
+
+def _token(name):
+    return re.search(r"--%s:(#[0-9a-fA-F]{6})" % name, CSS).group(1)
+
+
+class ThemeChecks(unittest.TestCase):
+    def test_palette_tokens(self):
+        flat = CSS.replace(" ", "")
+        self.assertIn("--bg:#030014", flat)
+        self.assertIn("--violet:", flat)
+        for old in ("--amber", "#f5b041", "245,176,65", "#0a1424", "53,208,232"):
+            self.assertNotIn(old, flat)
+
+    def test_inter_font(self):
+        fonts = next(l["href"] for l in P.links if l.get("rel") == "stylesheet")
+        self.assertIn("family=Inter", fonts)
+        self.assertNotIn("Space+Grotesk", fonts)
+        self.assertIn("'Inter'", CSS)
+
+    def test_particle_canvas(self):
+        self.assertIn('<canvas id="stars" aria-hidden="true"></canvas>', HTML)
+        self.assertRegex(CSS.replace(" ", ""), r"#stars\{[^}]*pointer-events:none")
+
+    # Review Focus 2
+    def test_particles_respect_reduced_motion_and_hidden_tab(self):
+        js = re.search(r"getElementById\('stars'\)(.*?)\}\)\(\);", HTML, re.S).group(1)
+        self.assertIn("prefers-reduced-motion", js)
+        self.assertIn("document.hidden", js)
+
+    def test_glass_fallback(self):
+        self.assertIn("@supports not (backdrop-filter", CSS)
+
+    def test_project_gradient_strip(self):
+        self.assertIn(".proj::before", CSS.replace(" ", ""))
+
+    def test_old_grid_removed(self):
+        self.assertNotIn("background-size:48px", CSS.replace(" ", ""))
+
+    # Review Focus 4
+    def test_text_contrast(self):
+        bg = _token("bg")
+        surface = _blend(bg, 0.15)  # conservative: much lighter than the real 4.5% glass
+        self.assertGreaterEqual(_ratio(_token("muted"), bg), 4.5)
+        self.assertGreaterEqual(_ratio(_token("muted"), surface), 4.5)
+        self.assertGreaterEqual(_ratio(_token("violet"), surface), 4.5)
+        self.assertGreaterEqual(_ratio(_token("cyan"), surface), 4.5)
 
 
 if __name__ == "__main__":
