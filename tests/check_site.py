@@ -149,5 +149,22 @@ class AboutExperienceChecks(unittest.TestCase):
         self.assertEqual(len(re.findall(r'<div class="(?:cl|bk)">', HTML)), 2)
 
 
+class SkillsEducationChecks(unittest.TestCase):
+    def test_skill_tracks(self):
+        self.assertIn('id="skills"', HTML)
+        self.assertEqual(len(re.findall(r'<div class="track (?:bk|cl) reveal">', HTML)), 2)
+
+    def test_key_skills_present(self):
+        for s in ("Go", "Node.js", "NestJS", "TypeScript", "Socket.IO", "BullMQ", "MongoDB", "PostgreSQL", "Redis",
+                  "AWS", "Docker", "Kubernetes", "Helm", "Terraform", "GitHub Actions", "Nginx", "Prometheus",
+                  "Grafana", "OpenTelemetry", "CloudWatch", "System Design", "Microservices"):
+            self.assertRegex(HTML, r"<li>%s</li>" % re.escape(s))
+
+    def test_education(self):
+        self.assertIn('id="education"', HTML)
+        self.assertIn("Kurukshetra University", HTML)
+        self.assertIn("2022 – 2025", HTML)
+
+
 if __name__ == "__main__":
     unittest.main()
