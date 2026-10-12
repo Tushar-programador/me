@@ -375,14 +375,22 @@ class FlipCardChecks(unittest.TestCase):
     # Review Focus 1
     def test_flip_cards_readable_without_js(self):
         flat = CSS.replace(" ", "")
-        self.assertIn("html:not(.js).face{position:static", flat)
-        self.assertIn("html:not(.js).flip-inner{", flat)
+        self.assertIn("html:not(.js).face{grid-area:auto", flat)
+        self.assertIn("html:not(.js).flip-inner{display:block", flat)
 
     # Review Focus 2
     def test_flip_reduced_motion_is_instant_swap(self):
         block = re.search(r"@media\(prefers-reduced-motion:reduce\)\{(.*?)\n\}", CSS.replace(" ", ""), re.S).group(1)
         self.assertIn(".flip-inner{transform:none", block)
         self.assertIn(".flip[aria-pressed=true].face.front{opacity:0", block)
+        self.assertIn(".flip[aria-pressed=true].face.back{opacity:1", block)
+
+    def test_flip_faces_share_a_grid_cell_so_card_grows_with_text(self):
+        # absolute faces in a fixed min-height box let long back-face text spill onto the next card
+        flat = CSS.replace(" ", "")
+        self.assertIn(".flip-inner{position:relative;display:grid", flat)
+        self.assertIn(".face{grid-area:1/1", flat)
+        self.assertNotIn(".face{position:absolute", flat)
 
     def test_reveal_not_on_flip_inner(self):
         # .reveal sets transform; on the rotating element it would cancel the flip
@@ -428,7 +436,8 @@ class ContactFooterChecks(unittest.TestCase):
     # Review Focus 1
     def test_form_hidden_without_js(self):
         self.assertIn("html:not(.js).cform{display:none", CSS.replace(" ", ""))
-        self.assertIn("mailto:tusharkalra307@gmail.com", HTML)  # visible fallback link stays
+        # the fallback link lives inside the form note, which is hidden with the form; the contact list keeps its own
+        self.assertRegex(HTML, r'(?s)<ul class="contact-list reveal">.*?<a href="mailto:tusharkalra307@gmail\.com">')
 
     # Review Focus 5
     def test_form_mailto_encoding_and_limit(self):
@@ -437,6 +446,15 @@ class ContactFooterChecks(unittest.TestCase):
         self.assertEqual(js.count("encodeURIComponent"), 2)
         self.assertIn("preventDefault", js)
         self.assertIn('maxlength="1500"', HTML)
+
+    # Review Focus 5 (found in final review): maxlength limits characters, not the percent-encoded URL
+    def test_form_guards_encoded_mailto_length(self):
+        js = re.search(r"getElementById\('cform'\)(.*?)\}\)\(\);", HTML, re.S).group(1)
+        self.assertIn("url.length>1800", js.replace(" ", ""))
+        self.assertIn("form-status", js)
+        self.assertIn('<p class="form-status" role="status" aria-live="polite"></p>', HTML)
+        # the guard must sit before the navigation
+        self.assertLess(js.index("url.length"), js.index("location.href"))
 
     def test_footer_content(self):
         foot = re.search(r'<footer class="foot">(.*?)</footer>', HTML, re.S).group(1)

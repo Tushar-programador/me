@@ -172,9 +172,9 @@ html.js .reveal.in{opacity:1;transform:none}
 .icon-link svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
 .flip{display:block;width:100%;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer;perspective:1000px}
-.flip-inner{position:relative;display:block;min-height:270px;transition:transform .7s;transform-style:preserve-3d}
+.flip-inner{position:relative;display:grid;min-height:270px;transition:transform .7s;transform-style:preserve-3d}
 .flip[aria-pressed=true] .flip-inner{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--radius);background:var(--bg-2);border:1px solid var(--line);border-top:3px solid var(--cyan);backface-visibility:hidden;-webkit-backface-visibility:hidden;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.face{grid-area:1/1;display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:var(--radius);background:var(--bg-2);border:1px solid var(--line);border-top:3px solid var(--cyan);backface-visibility:hidden;-webkit-backface-visibility:hidden;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .flip.bk .face{border-top-color:var(--violet)}
 .face.back{transform:rotateY(180deg);justify-content:space-between}
 .flip:hover .face{box-shadow:0 0 28px rgba(34,211,238,.18)}
@@ -187,8 +187,8 @@ html.js .reveal.in{opacity:1;transform:none}
 .f-desc{color:var(--muted);font-size:.95rem}
 .f-tags{display:flex;flex-wrap:wrap;gap:6px}
 .f-tags span{font:500 .72rem var(--mono);padding:3px 8px;border:1px solid var(--line);border-radius:5px}
-html:not(.js) .flip-inner{min-height:0;transform:none}
-html:not(.js) .face{position:static;backface-visibility:visible;margin-bottom:12px}
+html:not(.js) .flip-inner{display:block;min-height:0;transform:none}
+html:not(.js) .face{grid-area:auto;backface-visibility:visible;margin-bottom:12px}
 html:not(.js) .face.back{transform:none}
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;list-style:none;padding:0}
 .tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;text-align:center;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);font:500 .74rem var(--mono);color:var(--text);transition:transform .15s,border-color .15s}
@@ -204,6 +204,8 @@ html:not(.js) .face.back{transform:none}
 .cform input,.cform textarea{font:400 1rem var(--sans);letter-spacing:0;text-transform:none;color:var(--text);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:11px 14px;width:100%;resize:vertical}
 .cform input:focus,.cform textarea:focus{outline:2px solid var(--cyan);outline-offset:1px;border-color:transparent}
 .cform .btn{justify-self:start;cursor:pointer}
+.form-status{color:#fca5a5;font-size:.9rem}
+.form-status:empty{display:none}
 .form-note{color:var(--muted);font-size:.85rem}
 .form-note a{color:var(--cyan)}
 html:not(.js) .cform{display:none}
@@ -520,6 +522,7 @@ html:not(.js) .cform{display:none}
         <label>Subject<input name="subject" type="text" required></label>
         <label>Message<textarea name="message" rows="6" maxlength="1500" required></textarea></label>
         <button class="btn" type="submit">Send message</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
         <p class="form-note">This opens your email app with the message filled in. Or write to <a href="mailto:tusharkalra307@gmail.com">tusharkalra307@gmail.com</a>.</p>
       </form>
     </div>
@@ -615,7 +618,11 @@ document.querySelectorAll('.flip').forEach(function(b){
     e.preventDefault();
     var d=new FormData(f);
     var body='Name: '+d.get('name')+'\nEmail: '+d.get('email')+'\n\n'+d.get('message');
-    location.href='mailto:tusharkalra307@gmail.com?subject='+encodeURIComponent(d.get('subject'))+'&body='+encodeURIComponent(body);
+    var url='mailto:tusharkalra307@gmail.com?subject='+encodeURIComponent(d.get('subject'))+'&body='+encodeURIComponent(body);
+    var st=f.querySelector('.form-status');
+    if(url.length>1800){st.textContent='That message is too long for your email app. Please shorten it, or email me directly at tusharkalra307@gmail.com.';return}
+    st.textContent='';
+    location.href=url;
   });
 })();
 </script>
