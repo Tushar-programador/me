@@ -194,5 +194,33 @@ class ProjectChecks(unittest.TestCase):
             self.assertIn(s, card)
 
 
+class ContactSeoChecks(unittest.TestCase):
+    def test_contact_details(self):
+        self.assertIn('id="contact"', HTML)
+        for href in ("mailto:tusharkalra307@gmail.com", "tel:+917206405935",
+                     "https://www.linkedin.com/in/tushar-kalra-developer/",
+                     "https://github.com/Tushar-programador",
+                     "https://tushar-programador.github.io/me/"):
+            self.assertIn(href, P.hrefs)
+
+    def test_open_to_roles(self):
+        for role in ("Backend Engineer", "Software Engineer", "Cloud / DevOps Engineer", "Platform Engineer"):
+            self.assertIn(role, HTML)
+
+    def test_jsonld_person(self):
+        data = json.loads("".join(P.jsonld))
+        self.assertEqual(data["@type"], "Person")
+        self.assertEqual(data["name"], "Tushar Kalra")
+        self.assertIn("https://github.com/Tushar-programador", data["sameAs"])
+
+    def test_no_leftover_markers(self):
+        for m in ("<!--@", "@css-end", "@js-end"):
+            self.assertNotIn(m, HTML)
+
+    def test_no_solar_system_remnants(self):
+        for s in ("three.min.js", "anime.min.js", "bg-canvas", "THREE."):
+            self.assertNotIn(s, HTML)
+
+
 if __name__ == "__main__":
     unittest.main()
